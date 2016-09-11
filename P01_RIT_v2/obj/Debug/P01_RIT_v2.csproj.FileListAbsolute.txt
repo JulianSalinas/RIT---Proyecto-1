@@ -1,0 +1,6 @@
+E:\Documentos\RIT\P01_RIT_v2\bin\Debug\P01_RIT_v2.exe.config
+E:\Documentos\RIT\P01_RIT_v2\obj\Debug\P01_RIT_v2.csprojResolveAssemblyReference.cache
+E:\Documentos\RIT\P01_RIT_v2\bin\Debug\P01_RIT_v2.exe
+E:\Documentos\RIT\P01_RIT_v2\bin\Debug\P01_RIT_v2.pdb
+E:\Documentos\RIT\P01_RIT_v2\obj\Debug\P01_RIT_v2.exe
+E:\Documentos\RIT\P01_RIT_v2\obj\Debug\P01_RIT_v2.pdb
