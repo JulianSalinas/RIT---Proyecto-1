@@ -11,8 +11,11 @@ namespace P01_RIT_v2.Clases
 
         [STAThread]
         static void Main() {
-            Opciones.Instance.cargarOpciones();
             Console.Write(Opciones.Instance);
+            Console.ReadLine();
+
+            Invertido.Instance.indexarColeccion();
+            Console.Write(Invertido.Instance);
             Console.ReadLine();
 
             /*Application.EnableVisualStyles();

@@ -17,11 +17,7 @@ namespace P01_RIT_v2.Clases
         public string RutaStopWords;
         public string RutaColeccion;     
         public string RutaArchivos;
-
-
-        protected Opciones() {
-            cargarOpciones();
-        }
+        public string Prefijo;
 
         public static Opciones Instance{
             get{
@@ -33,7 +29,8 @@ namespace P01_RIT_v2.Clases
 
         /*Lee las rutas del XML opciones*/
 
-        public void cargarOpciones() {
+        protected Opciones() {
+            Prefijo = "PRE-1";
             RutaOpciones = "...\\...\\Recursos\\Opciones.xml";
             RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
 

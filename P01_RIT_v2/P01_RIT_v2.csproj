@@ -35,8 +35,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Clases\Documento.cs" />
+    <Compile Include="Clases\Invertido.cs" />
+    <Compile Include="Clases\Posting.cs" />
     <Compile Include="Clases\Programa.cs" />
     <Compile Include="Clases\Opciones.cs" />
+    <Compile Include="Clases\Stopwords.cs" />
+    <Compile Include="Clases\Termino.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
