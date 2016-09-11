@@ -19,7 +19,7 @@ namespace P01_RIT_v2.Clases
         }
 
         public override string ToString() {
-            return Palabra +"\t\t\t"+ Ni.ToString() +"\t\t\t"+ Inicio.ToString()+"\n";
+            return Inicio.ToString() +"\t\t\t"+ Ni.ToString() +"\t\t\t"+ Palabra + "\n";
         }
 
     }

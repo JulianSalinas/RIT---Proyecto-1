@@ -38,24 +38,38 @@ namespace P01_RIT_v2.Clases
             int currentBegin = 0;
             foreach ( Termino term in Diccionario ) {
                 int currentNi = 0;
+                term.Ni = calcularNi(term);
                 foreach ( Documento doc in Documentos ) {
                     if ( doc.hasTermino(term.Palabra) ) {
                         currentNi++;
                         int freq = doc.countTermino(term.Palabra);
-                        double peso = calcularPeso(freq, currentNi);
+                        double peso = calcularPeso(term, doc);
                         Postings.Add(new Posting(doc.Id, freq, peso));
                     }
                 }
-                term.Ni = currentNi;
                 term.Inicio = currentBegin;
                 currentBegin = currentBegin + currentNi;
             }
 
         }
 
-        public double calcularPeso(int freq, int ni) {
+        /*Numero de veces que aparace un termino en la coleccion*/
+
+        public int calcularNi(Termino term) {
+            int Ni = 0;
+            foreach ( Documento doc in Documentos )
+                if ( doc.hasTermino(term.Palabra) ) 
+                    Ni++;
+            return Ni;
+        }
+
+        /*Formula ( 1 + Math.Log(freq) ) * Math.Log((N+0.5)/(ni-0.5))*/
+
+        public double calcularPeso(Termino term, Documento doc) {
             int N = Documentos.Count;
-            return ( 1 + Math.Log(freq) ) * Math.Log((N+0.5)/(ni-0.5));
+            int Freq = doc.countTermino(term.Palabra);
+            int Ni = term.Ni;
+            return ( 1 + Math.Log10(Freq) ) * Math.Log10((N+0.5)/(Ni-0.5));
         }
 
         /*Lee la carpeta de la coleccion y carga el id y ruta de cada documento*/
@@ -103,7 +117,7 @@ namespace P01_RIT_v2.Clases
 
         public override string ToString() {
             string str = "Diccionario: \n";
-            str += "Palabra\t\t\tNi\t\t\tInicio\n";
+            str += "Inicio\t\t\tNi\t\t\tPalabra\n";
 
             foreach ( Termino term in Diccionario )
                 str += term.ToString();
