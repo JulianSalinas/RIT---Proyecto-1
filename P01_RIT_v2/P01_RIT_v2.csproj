@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Clases\Programa.cs" />
     <Compile Include="Clases\Opciones.cs" />
+    <Compile Include="Clases\Stopwords.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
