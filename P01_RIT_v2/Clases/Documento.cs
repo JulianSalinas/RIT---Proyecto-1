@@ -18,6 +18,7 @@ namespace P01_RIT_v2.Clases
         public Documento( int id, string ruta) {
             this.Id = id;
             this.Ruta = ruta;
+            Terminos = new List<string>();
         }
 
         public int countTermino( string term ) {
@@ -51,7 +52,9 @@ namespace P01_RIT_v2.Clases
             return description.GetAttributeNode("rank").Value;
         }
 
-        public void cargarTerminos() {
+        public List<string> getTerminos() {
+
+            cargarXmlDocument();
 
             /*Patron para obtener todos los numeros incluso los que tienen decimales*/
             string numPattern = @"(\d)?(\d|,)*\.?\d";
@@ -82,6 +85,8 @@ namespace P01_RIT_v2.Clases
             foreach ( string word in taxonDescriptionWords )
                 if ( word != "" && ! Stopwords.Instance.hasTerm(word) )
                     Terminos.Add(word);
+
+            return Terminos;
         }
 
 

@@ -18,5 +18,9 @@ namespace P01_RIT_v2.Clases
             this.Inicio = inicio;
         }
 
+        public override string ToString() {
+            return Palabra +"\t\t\t"+ Ni.ToString() +"\t\t\t"+ Inicio.ToString()+"\n";
+        }
+
     }
 }
