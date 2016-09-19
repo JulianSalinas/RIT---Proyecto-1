@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>P01_RIT_v2</RootNamespace>
     <AssemblyName>P01_RIT_v2</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,6 +35,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Clases\BusquedaVectorial.cs" />
     <Compile Include="Clases\Documento.cs" />
     <Compile Include="Clases\Invertido.cs" />
     <Compile Include="Clases\Posting.cs" />

@@ -15,8 +15,8 @@ namespace P01_RIT_v2.Clases
         private static Opciones instance;
         public string RutaOpciones;
         public string RutaStopWords;
-        public string RutaColeccion;     
-        public string RutaArchivos;
+        public string RutaColeccion;  // Carpeta con archivos XML de colección.   
+        public string RutaArchivos;	  // Carpeta con archivos invertidos.
         public string Prefijo;
 
         public static Opciones Instance{
@@ -33,15 +33,17 @@ namespace P01_RIT_v2.Clases
             Prefijo = "PRE-1";
             RutaOpciones = "...\\...\\Recursos\\Opciones.xml";
             RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
+            RutaColeccion = "...\\...\\Coleccion\\";
+            RutaArchivos = "...\\...\\Archivos\\";
 
             XmlDocument docOpciones = new XmlDocument();
             docOpciones.Load(RutaOpciones);
 
-            XmlElement opciones = docOpciones.DocumentElement;
-            XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
-            XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
-            RutaColeccion = rutaC.FirstChild.Value;
-            RutaArchivos = rutaA.FirstChild.Value;
+            //XmlElement opciones = docOpciones.DocumentElement;
+            //XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
+            //XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
+            //RutaColeccion = rutaC.FirstChild.Value;
+            //RutaArchivos = rutaA.FirstChild.Value;
         }
 
         /*Sobrescribe el archivo de opciones del proyecto*/

@@ -14,9 +14,16 @@ namespace P01_RIT_v2.Clases
             Console.Write(Opciones.Instance);
             Console.ReadLine();
 
-            Invertido.Instance.indexarColeccion();
-            Console.Write(Invertido.Instance);
+            Invertido nuevoInvertido = new Invertido();
+                
+            nuevoInvertido.indexarColeccion();
+            Console.Write(nuevoInvertido);
             Console.ReadLine();
+
+            nuevoInvertido.exportarArchivoInvertido("Prueba.xml");
+
+            // Invertido.importarDesdeXml("Prueba.xml");
+
 
             /*Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

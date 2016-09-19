@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace P01_RIT_v2.Clases
 {
-    class Termino
+
+    [Serializable]
+    public class Termino
     {
-        public string Palabra;
+        public string Contenido;
         public int Ni;
         public int Inicio;
 
+        public Termino()
+        {
+            Contenido = "";
+            Ni = 0;
+            Inicio = -1;
+        }
         public Termino( string palabra, int ni, int inicio ) {
-            this.Palabra = palabra;
+            this.Contenido = palabra;
             this.Ni = ni;
             this.Inicio = inicio;
         }
 
         public override string ToString() {
-            return Inicio.ToString() +"\t\t\t"+ Ni.ToString() +"\t\t\t"+ Palabra + "\n";
+            return Inicio.ToString() +"\t\t\t"+ Ni.ToString() +"\t\t\t"+ Contenido + "\n";
         }
 
     }

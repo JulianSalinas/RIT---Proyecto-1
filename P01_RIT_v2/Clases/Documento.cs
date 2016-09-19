@@ -1,24 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace P01_RIT_v2.Clases
 {
-    class Documento
+    [Serializable]
+    public class Documento
     {
         public int Id;
         public string Ruta;
+
+        [XmlIgnoreAttribute]
         public List<string> Terminos;
+
+        [XmlIgnoreAttribute]
         private XmlDocument XmlDocument;
+
+        public Documento()
+        {
+            Id = 0;
+            Ruta = "";
+            Terminos = null;
+            XmlDocument = null;
+        }
 
         public Documento( int id, string ruta) {
             this.Id = id;
             this.Ruta = ruta;
             Terminos = new List<string>();
+            XmlDocument = null;
         }
 
         public int countTermino( string term ) {
@@ -34,19 +47,19 @@ namespace P01_RIT_v2.Clases
             XmlDocument.Load(Ruta);
         }
 
-        public string getTaxonDescription() {
+        private string getTaxonDescription() {
             XmlElement treatment = XmlDocument.DocumentElement;
             XmlElement description = (XmlElement) treatment.GetElementsByTagName("description")[0];
             return description.GetAttributeNode("taxon_description").Value;
         }
 
-        public string getTaxonName() {
+        private string getTaxonName() {
             XmlElement treatment = XmlDocument.DocumentElement;
             XmlElement description = (XmlElement) treatment.GetElementsByTagName("taxon_identification")[0];
             return description.GetAttributeNode("taxon_name").Value;
         }
 
-        public string getRank() {
+        private string getRank() {
             XmlElement treatment = XmlDocument.DocumentElement;
             XmlElement description = (XmlElement) treatment.GetElementsByTagName("taxon_identification")[0];
             return description.GetAttributeNode("rank").Value;
@@ -69,7 +82,15 @@ namespace P01_RIT_v2.Clases
             string tNQuitAccents = Stopwords.Instance.quitarAcentos(tNToLower);
             string tNClearText = clearRegex.Replace(tNQuitAccents, "");
             List<string> tNWords = tNClearText.Split(' ').ToList();
-            Terminos.Add(tNWords.ElementAt(0) + ' ' + tNWords.ElementAt(1));
+
+
+            string tNTermino = tNWords.ElementAt(0);
+            if (tNWords.Count > 1)
+            {
+                tNTermino += ' ' + tNWords.ElementAt(1);
+            }
+
+            Terminos.Add(tNTermino);
             Terminos.Add(getRank().ToLower());
 
             /*Se agregan los terminos pertenecientes al Taxon description*/
@@ -88,8 +109,6 @@ namespace P01_RIT_v2.Clases
 
             return Terminos;
         }
-
-
 
         override public string ToString() {
             string termsString = "";
