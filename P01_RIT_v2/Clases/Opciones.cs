@@ -29,8 +29,8 @@ namespace P01_RIT_v2.Clases
 
         protected Opciones() {
             RutaOpciones = "...\\...\\Recursos\\";
-            /*RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
-            RutaColeccion = "...\\...\\Coleccion\\";
+            RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
+            /*RutaColeccion = "...\\...\\Coleccion\\";
             RutaArchivos = "...\\...\\Archivos\\";
             Prefijo = "PRE-1";*/
             XmlDocument docOpciones = new XmlDocument();

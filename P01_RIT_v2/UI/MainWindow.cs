@@ -38,6 +38,11 @@ namespace P01_RIT_v2.UI
             Opciones.Instance.guardarOpciones();
         }
 
-
+        private void buttonIndexar_Click( object sender, EventArgs e ) {
+            MessageBox.Show("Espere mientras se indexa la coleccion");
+            Invertido.Instance.indexarColeccion();
+            Invertido.Instance.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text + ".xml");
+            MessageBox.Show("Indexación finalizada");
+        }
     }
 }
