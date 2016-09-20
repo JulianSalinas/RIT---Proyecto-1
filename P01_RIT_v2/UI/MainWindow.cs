@@ -25,9 +25,19 @@ namespace P01_RIT_v2.UI
         private void buttonColeccion_Click( object sender, EventArgs e ) {
             folderBrowserDialog.Description = "Escoge la carpeda donde esta almacenada la colección";
             folderBrowserDialog.ShowDialog();
-            string selectedPath = folderBrowserDialog.SelectedPath;
-            Opciones.Instance.RutaColeccion = selectedPath;
-            textBoxColeccion.Text = selectedPath;
+            textBoxColeccion.Text = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.RutaColeccion = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.guardarOpciones();
         }
+
+        private void buttonInvertido_Click( object sender, EventArgs e ) {
+            folderBrowserDialog.Description = "Escoge la carpeda donde almacenará el archivo invertido";
+            folderBrowserDialog.ShowDialog();
+            textBoxColeccion.Text = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.RutaArchivos = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.guardarOpciones();
+        }
+
+
     }
 }

@@ -93,6 +93,7 @@
             this.buttonInvertido.Theme = MetroFramework.MetroThemeStyle.Light;
             this.buttonInvertido.UseSelectable = true;
             this.buttonInvertido.UseVisualStyleBackColor = true;
+            this.buttonInvertido.Click += new System.EventHandler(this.buttonInvertido_Click);
             // 
             // buttonColeccion
             // 
