@@ -11,29 +11,39 @@ namespace P01_RIT_v2.Clases
     [XmlRoot(ElementName = "ArchivoInvertido")]
     public class Invertido
     {
+        /// <summary>
+        /// Colección de documentos.
+        /// </summary>
         public List<Documento> Documentos;
+
+        /// <summary>
+        /// Términos registrados.
+        /// </summary>
         public List<Termino> Diccionario;
+
+        /// <summary>
+        /// Posting de términos registrados.
+        /// </summary>
         public List<Posting> Postings;
 
-        private static Invertido instance;
+        /// <summary>
+        /// Ruta del archivo invertido en almacenamiento (si el archivo invertido ya fue exportado.)
+        /// </summary>
+        public string rutaArchivoInvertido;
 
-        public static Invertido Instance {
-            get {
-                if (instance == null)
-                    instance = new Invertido();
-                return instance;
-            }
-        }
-
+        /// <summary>
+        /// Constructor por defecto. Necesario para serializar y deserializar archivo invertido.
+        /// </summary>
         public Invertido() {
             Diccionario = new List<Termino>();
             Postings = new List<Posting>();
             Documentos = new List<Documento>();
         }
 
-        /*Despues de indexar se debe guardar en archivos xml los posting y diccionario*/
-
-        public void indexarColeccion() {
+        /// <summary>
+        /// Genera los Postings del archivo invertido.
+        /// </summary>
+        private void indexarColeccion() {
             cargarDocumentos();
             crearDiccionario();
 
@@ -55,9 +65,12 @@ namespace P01_RIT_v2.Clases
 
         }
 
-        /*Numero de veces que aparace un termino en la coleccion*/
-
-        public int calcularNi(Termino term) {
+        /// <summary>
+        /// Calcula el valor Ni: Apariciones de un término en diferentes documentos.
+        /// </summary>
+        /// <param name="term">Término a consultar.</param>
+        /// <returns>Cantidad de documentos donde aparece el término.</returns>
+        private int calcularNi(Termino term) {
             int Ni = 0;
             foreach (Documento doc in Documentos)
                 if (doc.hasTermino(term.Contenido))
@@ -65,18 +78,25 @@ namespace P01_RIT_v2.Clases
             return Ni;
         }
 
-        /*Formula ( 1 + Math.Log(freq) ) * Math.Log((N+0.5)/(ni-0.5))*/
-
-        public double calcularPeso(Termino term, Documento doc) {
+        /// <summary>
+        /// Calcula el peso correspondiente para un término asociado a un documento.
+        /// </summary>
+        /// <param name="term">Término registrado.</param>
+        /// <param name="doc">Documento registrado.</param>
+        /// <returns>Peso calculado para el término en el documento.</returns>
+        private double calcularPeso(Termino term, Documento doc) {
             int N = Documentos.Count;
-            int Freq = doc.countTermino(term.Contenido);
+            int frecuencia = doc.countTermino(term.Contenido);
             int Ni = term.Ni;
-            return (1 + Math.Log10(Freq)) * Math.Log10((N + 0.5) / (Ni - 0.5));
+
+            // Fórmula a utilizar según especificación del programa.
+            return (1 + (Math.Log(frecuencia, 2) * Math.Log((N / Ni), 2)));
         }
-
-        /*Lee la carpeta de la coleccion y carga el id y ruta de cada documento*/
-
-        public void cargarDocumentos() {
+        
+        /// <summary>
+        /// Lee la carpeta de la coleccion y carga el id y ruta de cada documento.
+        /// </summary>
+        private void cargarDocumentos() {
             int currentId = 0;
             foreach (string file in Directory.GetFiles(Opciones.Instance.RutaColeccion, "*.xml").ToList()) {
                 FileInfo fileInfo = new FileInfo(file);
@@ -86,20 +106,37 @@ namespace P01_RIT_v2.Clases
             }
         }
 
-        /*Obtiene una sola copia de todas las palabras en la coleccion*/
-
-        public void crearDiccionario() {
+        /// <summary>
+        /// Obtiene una sola copia de todas las palabras en la coleccion.
+        /// </summary>
+        private void crearDiccionario() {
             foreach (Documento doc in Documentos)
                 foreach (string termino in doc.getTerminos())
                     if (!Diccionario.Exists(x => x.Contenido == termino))
                         Diccionario.Add(new Termino(termino, 0, 0));
         }
 
-        /* Exporta el archivo invertida en un archivo XML
-         * nombreArchivoPostings : Nombre del archivo XML a ser creado.
-         */
-        public void exportarArchivoInvertido(String nombreArchivoPostings)
+        /// <summary>
+        /// Exporta el archivo invertido creado en un String. El archivo será guardado en la carpeta por defecto del programa.
+        /// </summary>
+        /// <param name="nombreArchivoPostings">
+        /// Nombre del archivo XML que será creado. No insertar extensión.
+        /// Si no se ingresa un nombre se utiliza la fecha y hora del sistema. 
+        /// </param>
+        public void exportarArchivoInvertido(String nombreArchivoPostings = "")
         {
+            // Regex para verificar que archivo tiene nombre válido.
+            Regex caracteresInvalidos = new Regex("[" + Regex.Escape(System.IO.Path.GetInvalidFileNameChars().ToString()) + "]");
+
+            if (nombreArchivoPostings == "")
+            {
+                nombreArchivoPostings = System.DateTime.Now.ToString("dd-MM-yyyy hh-mm-ss");
+            }
+            else if (caracteresInvalidos.IsMatch(nombreArchivoPostings))
+            {
+                throw new Exception("El nombre de archivo ingresado no es válido.");
+            }
+            nombreArchivoPostings += ".xml";
             try
             {
                 System.Xml.Serialization.XmlSerializer serializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
@@ -107,43 +144,69 @@ namespace P01_RIT_v2.Clases
                 serializador.Serialize(archivoSalida, this);
                 archivoSalida.Close();
             }
-            catch (FileNotFoundException e)
+            catch (System.IO.PathTooLongException e)
             {
-                Console.WriteLine("El archivo XML no existe.");
+                throw new Exception("La ruta del archivo tiene un nombre muy largo.");
+            }
+            catch (NotSupportedException e)
+            {
+                throw new Exception("No hay soporte para crear el archivo.");
             }
             catch (IOException e)
             {
-                Console.WriteLine("Error al escribir el archivo.");
+                throw new Exception("Error al crear el archivo.");
             }
         }
 
-        /*
-         * Importa el contenido del archivo XML que contiene los detalles de un archivo invertido.
-         * nombreArchivoPostings : Nombre del archivo XML que será carga
-         */
+        /// <summary>
+        /// Importa el contenido de un archivo XML para generar un Archivo Invertido. El archivo debe estar guardado en la carpeta por defecto del programa.
+        /// </summary>
+        /// <param name="nombreArchivoPostings">
+        /// Nombre del archivo XML a cargar. El nombre no debe tener la extensión (.xml).
+        /// </param>
+        /// <returns></returns>
         public static Invertido importarArchivoInvertido(String nombreArchivoPostings)
         {
+            // Regex para verificar que archivo tiene nombre válido.
+            Regex caracteresInvalidos = new Regex("[" + Regex.Escape(System.IO.Path.GetInvalidFileNameChars().ToString()) + "]");
+
+            if (nombreArchivoPostings == "")
+            {
+                throw new Exception("El nombre del archivo no puede estar vacío.");
+            }
+            else if (caracteresInvalidos.IsMatch(nombreArchivoPostings))
+            {
+                throw new Exception("El nombre de archivo ingresado no es válido.");
+            }
+            nombreArchivoPostings += ".xml";
+
             try
             {
                 System.Xml.Serialization.XmlSerializer deserializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
                 System.IO.FileStream archivoEntrada = System.IO.File.OpenRead(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
                 Invertido invertidoAbierto = (Invertido)deserializador.Deserialize(archivoEntrada);
                 archivoEntrada.Close();
+
                 return invertidoAbierto;
             }
             catch (FileNotFoundException e)
             {
-                Console.WriteLine("El archivo XML no existe.");
-                return null;
+                throw new Exception ("El archivo XML no existe.");
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new Exception("El archivo XML ingresado no contiene la estructura de un Archivo Invertido.");
             }
             catch (IOException e)
             {
-                Console.WriteLine("Error al leer el archivo.");
-                return null;
+                throw new Exception("Error al leer el archivo.");
             }
         }
 
-        /*Para comprobar que se ha creado bien*/
+        /// <summary>
+        /// Exporta el Archivo Invertido a un String. Utilizar para probar si el Archivo Invertido fue creado correctamente.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString() {
             string str = "Diccionario: \n";
             str += "Inicio\t\t\tNi\t\t\tPalabra\n";
@@ -160,17 +223,35 @@ namespace P01_RIT_v2.Clases
             return str;
         }
 
+        /// <summary>
+        /// Genera una nueva instancia de un Archivo Invertido con las colecciones por defecto, utilizando las carpetas del programa.
+        /// </summary>
+        /// <returns>
+        /// Archivo invertido generado.
+        /// </returns>
+        public static Invertido generarArchivoInvertidoPorDefecto()
+        {
+            try
+            {
+                Invertido nuevoInvertido = new Invertido();
+                nuevoInvertido.indexarColeccion();
+                return nuevoInvertido;
+            }
+            catch(Exception e)
+            {
+                throw new Exception("No se pudo crear el archivo invertido por defecto.");
+            }
+        }
 
-        /*
-         *  Los siguientes algoritmos sirven para hacer búsquedas booleanas en el Archivo Invertido.
-         *  Son para obtener los postings para los términos consultados.
-         *  Los postings obtenidos luego serán utilizados para algoritmos de consulta.
-         * /
-
-        /*
-         * Busca la entrada del término en el archivo invertido.
-         * Recibe un string como término de búsqueda. 
-         */
+        /// <summary>
+        /// Busca la entrada del término en el Archivo Invertido.
+        /// </summary>
+        /// <param name="terminoBusqueda">
+        /// Término a buscar.
+        /// </param>
+        /// <returns>
+        /// Objeto Termino encontrado. Null si el término no existe.
+        /// </returns>
         public Termino obtenerTerminoExacto(string terminoBusqueda)
         {
             foreach (Termino terminoEncontrado in Diccionario)
@@ -183,10 +264,15 @@ namespace P01_RIT_v2.Clases
             return null;
         }
 
-        /*
-         * Obtiene una lista con todas las entradas de términos que tienen un mismo prefijo.
-         * Prefijo no debe tener asterisco al final (*)
-         */
+        /// <summary>
+        /// Obtiene una lista con los términos que comparten un prefijo.
+        /// </summary>
+        /// <param name="prefijo">
+        /// Prefijo de los términos buscados.
+        /// </param>
+        /// <returns>
+        /// Lista con objetos Término encontrados. Si no se encontró ningún término, la lista estará vacía.
+        /// </returns>
         public List<Termino> obtenerTerminosConPrefijo(string prefijo)
         {
             if (prefijo.Equals("") || prefijo == null)
@@ -207,16 +293,19 @@ namespace P01_RIT_v2.Clases
                         listaTerminos.Add(terminoEncontrado);
                     }
                 }
-
                 return listaTerminos;
             }
         }
-
-
-        /*
-         * Obtiene la lista de postings asociados a una entrade de término del archivo invertido.
-         * Si la entrada del término es nula, se retorna NULL.
-         */
+        
+        /// <summary>
+        /// Obtiene la lista de Postings asociados al registro del término.
+        /// </summary>
+        /// <param name="entradaTermino">
+        /// Objeto Término registrado.
+        /// </param>
+        /// <returns>
+        /// Lista de Postings del término.
+        /// </returns>
         List<Posting> obtenerPostingsTerminoExacto(Termino entradaTermino)
         {
             if (entradaTermino == null)
@@ -233,39 +322,19 @@ namespace P01_RIT_v2.Clases
                 {
                     postingsTermino.Add(Postings.ElementAt(posicionBusqueda));
                 }
-
                 return postingsTermino;
             }
         }
-
-        /*
-         * Obtiene las listas con los postings para todos los términos que tienen un mismo prefijo.
-         * Si la lista del términos encontrados es nula, se retorna NULL.
-         */
-        List<List<Posting>> obtenerPostingsTerminosConPrefijo(List<Termino> terminosEncontrados)
-        {
-            if (terminosEncontrados == null)
-            {
-                return null;
-            }
-            else
-            {
-                List<List<Posting>> postingsTerminos = new List<List<Posting>>();
-
-                foreach (Termino terminoEncontrado in terminosEncontrados)
-                {
-                    List<Posting> postingsTermino = obtenerPostingsTerminoExacto(terminoEncontrado);
-                    postingsTerminos.Add(postingsTermino);
-                }
-
-                return postingsTerminos;
-            }
-        }
-
-
-        /*
-         * Interfaz pública de obtenerPostingsTerminoExacto.
-         */
+        
+        /// <summary>
+        /// Obtiene los Postings de un término buscado en el Archivo Invertido.
+        /// </summary>
+        /// <param name="terminoBusqueda">
+        /// Término a buscar dentro del Archivo Invertido.
+        /// </param>
+        /// <returns>
+        /// Lista de Postings del término. Si el término no pudo ser encontrado, se retorna Null.
+        /// </returns>
         public List<Posting> obtenerPostingsTerminoExacto(string terminoBusqueda)
         {
             if ((terminoBusqueda == null) || (terminoBusqueda.Equals(""))) {
@@ -274,23 +343,6 @@ namespace P01_RIT_v2.Clases
 
             Termino terminoEncontrado = obtenerTerminoExacto(terminoBusqueda);
             return obtenerPostingsTerminoExacto(terminoEncontrado);
-        }
-
-      
-        /*
-         * Interfaz pública de obtenerPostingsConPrefijo.
-         */
-        public List<List<Posting>> obtenerPostingsTerminosConPrefijo(string prefijo)
-        {
-            if ((prefijo == null) || (prefijo.Equals("")))
-            {
-                return null;
-            }
-
-            List<Termino> terminosEncontrados = obtenerTerminosConPrefijo(prefijo);
-            return obtenerPostingsTerminosConPrefijo(terminosEncontrados);
-
-            
         }
     }
 }
