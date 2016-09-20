@@ -26,15 +26,23 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         public List<Posting> Postings;
 
+        /// <summary>
+        /// Ruta del archivo invertido en almacenamiento (si el archivo invertido ya fue exportado.)
+        /// </summary>
         public string rutaArchivoInvertido;
 
+        /// <summary>
+        /// Constructor por defecto. Necesario para serializar y deserializar archivo invertido.
+        /// </summary>
         public Invertido() {
             Diccionario = new List<Termino>();
             Postings = new List<Posting>();
             Documentos = new List<Documento>();
         }
 
-        /*Despues de indexar se debe guardar en archivos xml los posting y diccionario*/
+        /// <summary>
+        /// Genera los Postings del archivo invertido.
+        /// </summary>
         private void indexarColeccion() {
             cargarDocumentos();
             crearDiccionario();
@@ -57,7 +65,11 @@ namespace P01_RIT_v2.Clases
 
         }
 
-        /*Numero de veces que aparace un termino en la coleccion*/
+        /// <summary>
+        /// Calcula el valor Ni: Apariciones de un término en diferentes documentos.
+        /// </summary>
+        /// <param name="term">Término a consultar.</param>
+        /// <returns>Cantidad de documentos donde aparece el término.</returns>
         private int calcularNi(Termino term) {
             int Ni = 0;
             foreach (Documento doc in Documentos)
@@ -66,15 +78,24 @@ namespace P01_RIT_v2.Clases
             return Ni;
         }
 
-        /*Formula ( 1 + Math.Log(freq) ) * Math.Log((N+0.5)/(ni-0.5))*/
+        /// <summary>
+        /// Calcula el peso correspondiente para un término asociado a un documento.
+        /// </summary>
+        /// <param name="term">Término registrado.</param>
+        /// <param name="doc">Documento registrado.</param>
+        /// <returns>Peso calculado para el término en el documento.</returns>
         private double calcularPeso(Termino term, Documento doc) {
             int N = Documentos.Count;
-            int Freq = doc.countTermino(term.Contenido);
+            int frecuencia = doc.countTermino(term.Contenido);
             int Ni = term.Ni;
-            return (1 + Math.Log10(Freq)) * Math.Log10((N + 0.5) / (Ni - 0.5));
-        }
 
-        /*Lee la carpeta de la coleccion y carga el id y ruta de cada documento*/
+            // Fórmula a utilizar según especificación del programa.
+            return (1 + (Math.Log(frecuencia, 2) * Math.Log((N / Ni), 2)));
+        }
+        
+        /// <summary>
+        /// Lee la carpeta de la coleccion y carga el id y ruta de cada documento.
+        /// </summary>
         private void cargarDocumentos() {
             int currentId = 0;
             foreach (string file in Directory.GetFiles(Opciones.Instance.RutaColeccion, "*.xml").ToList()) {
@@ -85,7 +106,9 @@ namespace P01_RIT_v2.Clases
             }
         }
 
-        /*Obtiene una sola copia de todas las palabras en la coleccion*/
+        /// <summary>
+        /// Obtiene una sola copia de todas las palabras en la coleccion.
+        /// </summary>
         private void crearDiccionario() {
             foreach (Documento doc in Documentos)
                 foreach (string termino in doc.getTerminos())
@@ -200,7 +223,6 @@ namespace P01_RIT_v2.Clases
             return str;
         }
 
-
         /// <summary>
         /// Genera una nueva instancia de un Archivo Invertido con las colecciones por defecto, utilizando las carpetas del programa.
         /// </summary>
@@ -274,8 +296,7 @@ namespace P01_RIT_v2.Clases
                 return listaTerminos;
             }
         }
-
-
+        
         /// <summary>
         /// Obtiene la lista de Postings asociados al registro del término.
         /// </summary>
@@ -304,8 +325,7 @@ namespace P01_RIT_v2.Clases
                 return postingsTermino;
             }
         }
-
-
+        
         /// <summary>
         /// Obtiene los Postings de un término buscado en el Archivo Invertido.
         /// </summary>
