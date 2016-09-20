@@ -1,8 +1,10 @@
-﻿using System;
+﻿using P01_RIT_v2.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace P01_RIT_v2.Clases
 {
@@ -11,23 +13,24 @@ namespace P01_RIT_v2.Clases
 
         [STAThread]
         static void Main() {
-            Console.Write(Opciones.Instance);
-            Console.ReadLine();
+            //Para visualizar las rutas en la consola
+            //Console.Write(Opciones.Instance);
 
-            Invertido nuevoInvertido = new Invertido();
-                
-            nuevoInvertido.indexarColeccion();
-            Console.Write(nuevoInvertido);
-            Console.ReadLine();
+            //Crear un nuevo archivo invertido
+            //Invertido nuevoInvertido = new Invertido();
+            //nuevoInvertido.indexarColeccion();
+            //nuevoInvertido.exportarArchivoInvertido("Prueba.xml");
 
-            nuevoInvertido.exportarArchivoInvertido("Prueba.xml");
+            //Obtener un archivo invertido previamente creado
+            //Invertido nuevoInvertido = Invertido.importarArchivoInvertido("Prueba.xml");
 
-            // Invertido.importarDesdeXml("Prueba.xml");
+            //Visualizar el archivo invertido
+            //Console.Write(nuevoInvertido);
+            //Console.ReadLine();
 
-
-            /*Application.EnableVisualStyles();
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());*/
+            Application.Run(new MainWindow());
         }
 
     }

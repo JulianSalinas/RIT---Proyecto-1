@@ -41,14 +41,13 @@ namespace P01_RIT_v2.Clases
             foreach (Termino term in Diccionario) {
                 int currentNi = 0;
                 term.Ni = calcularNi(term);
-                foreach (Documento doc in Documentos) {
+                foreach (Documento doc in Documentos) 
                     if (doc.hasTermino(term.Contenido)) {
                         currentNi++;
                         int freq = doc.countTermino(term.Contenido);
                         double peso = calcularPeso(term, doc);
                         Postings.Add(new Posting(doc.Id, freq, peso));
                     }
-                }
                 term.Inicio = currentBegin;
                 currentBegin = currentBegin + currentNi;
             }
@@ -98,12 +97,12 @@ namespace P01_RIT_v2.Clases
         /* Exporta el archivo invertida en un archivo XML
          * nombreArchivoPostings : Nombre del archivo XML a ser creado.
          */
-        public void exportarArchivoInvertido(String nombreArchivoPostings)
+        public void exportarArchivoInvertido(string nombreArchivoPostings)
         {
             try
             {
-                System.Xml.Serialization.XmlSerializer serializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
-                System.IO.FileStream archivoSalida = System.IO.File.Create(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
+                XmlSerializer serializador = new XmlSerializer(typeof(Invertido));
+                FileStream archivoSalida = File.Create(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
                 serializador.Serialize(archivoSalida, this);
                 archivoSalida.Close();
             }
@@ -121,12 +120,12 @@ namespace P01_RIT_v2.Clases
          * Importa el contenido del archivo XML que contiene los detalles de un archivo invertido.
          * nombreArchivoPostings : Nombre del archivo XML que será carga
          */
-        public static Invertido importarArchivoInvertido(String nombreArchivoPostings)
+        public static Invertido importarArchivoInvertido(string nombreArchivoPostings)
         {
             try
             {
-                System.Xml.Serialization.XmlSerializer deserializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
-                System.IO.FileStream archivoEntrada = System.IO.File.OpenRead(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
+                XmlSerializer deserializador = new XmlSerializer(typeof(Invertido));
+                FileStream archivoEntrada = File.OpenRead(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
                 Invertido invertidoAbierto = (Invertido)deserializador.Deserialize(archivoEntrada);
                 archivoEntrada.Close();
                 return invertidoAbierto;

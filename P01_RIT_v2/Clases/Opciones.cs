@@ -35,28 +35,8 @@ namespace P01_RIT_v2.Clases
             RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
             RutaColeccion = "...\\...\\Coleccion\\";
             RutaArchivos = "...\\...\\Archivos\\";
-
-            XmlDocument docOpciones = new XmlDocument();
-            docOpciones.Load(RutaOpciones);
-
-            //XmlElement opciones = docOpciones.DocumentElement;
-            //XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
-            //XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
-            //RutaColeccion = rutaC.FirstChild.Value;
-            //RutaArchivos = rutaA.FirstChild.Value;
         }
 
-        /*Sobrescribe el archivo de opciones del proyecto*/
-
-        public void guardarOpciones() {
-            XmlWriter writer = XmlWriter.Create(RutaOpciones);
-            writer.WriteStartElement("Opciones");
-            writer.WriteElementString("RutaColeccion", RutaColeccion);
-            writer.WriteElementString("RutaArchivos", RutaArchivos);
-            writer.WriteEndElement();
-            writer.Flush();
-        }
-        
 
         override public string ToString() {
             string str = "Ruta de opciones: " + RutaOpciones + "\n";

@@ -89,5 +89,6 @@ namespace P01_RIT_v2.Clases
         public override string ToString() {
             return DocId + "\t\t\t" + Frecuencia.ToString() + "\t\t\t" + Peso.ToString() + "\n";
         }
+
     }
 }
