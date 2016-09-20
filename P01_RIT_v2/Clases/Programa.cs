@@ -28,6 +28,8 @@ namespace P01_RIT_v2.Clases
             //Console.Write(nuevoInvertido);
             //Console.ReadLine();
 
+            //Opciones.Instance.guardarOpciones();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());

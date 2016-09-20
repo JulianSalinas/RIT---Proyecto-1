@@ -20,6 +20,14 @@ namespace P01_RIT_v2.UI
             textBoxPrefijo.Text = Opciones.Instance.Prefijo;
             textBoxColeccion.Text = Opciones.Instance.RutaColeccion;
             textBoxInvertido.Text = Opciones.Instance.RutaArchivos;
+            textBoxInvertidoConsultas.Text = Opciones.Instance.RutaConsultas;
+        }
+
+        private void buttonIndexar_Click( object sender, EventArgs e ) {
+            MessageBox.Show("Espere mientras se indexa la coleccion");
+            Invertido.Instance.indexarColeccion();
+            Invertido.Instance.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text + ".xml");
+            MessageBox.Show("Indexación finalizada");
         }
 
         private void buttonColeccion_Click( object sender, EventArgs e ) {
@@ -38,11 +46,17 @@ namespace P01_RIT_v2.UI
             Opciones.Instance.guardarOpciones();
         }
 
-        private void buttonIndexar_Click( object sender, EventArgs e ) {
-            MessageBox.Show("Espere mientras se indexa la coleccion");
-            Invertido.Instance.indexarColeccion();
-            Invertido.Instance.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text + ".xml");
-            MessageBox.Show("Indexación finalizada");
+        private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
+            Opciones.Instance.Prefijo = textBoxPrefijo.Text;
         }
+
+        private void buttonInvertidoConsultas_Click( object sender, EventArgs e ) {
+            folderBrowserDialog.Description = "Escoge la carpeda donde almacenarán los resultados de las consultas";
+            folderBrowserDialog.ShowDialog();
+            textBoxColeccion.Text = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath;
+            Opciones.Instance.guardarOpciones();
+        }
+
     }
 }

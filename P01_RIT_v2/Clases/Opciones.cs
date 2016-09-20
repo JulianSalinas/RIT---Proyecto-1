@@ -17,6 +17,7 @@ namespace P01_RIT_v2.Clases
         public string RutaStopWords;
         public string RutaColeccion;
         public string RutaArchivos;
+        public string RutaConsultas;
         public string Prefijo;
 
         public static Opciones Instance{
@@ -32,6 +33,7 @@ namespace P01_RIT_v2.Clases
             RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
             /*RutaColeccion = "...\\...\\Coleccion\\";
             RutaArchivos = "...\\...\\Archivos\\";
+            RutaConsultas = "...\\...\\Consultas\\";
             Prefijo = "PRE-1";*/
             XmlDocument docOpciones = new XmlDocument();
             docOpciones.Load(RutaOpciones + "Opciones.xml");
@@ -39,9 +41,11 @@ namespace P01_RIT_v2.Clases
             XmlElement pre = (XmlElement) opciones.GetElementsByTagName("Prefijo")[0];
             XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
             XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
+            XmlElement rutaCon = (XmlElement) opciones.GetElementsByTagName("RutaConsultas")[0];
             Prefijo = pre.FirstChild.Value;
             RutaColeccion = rutaC.FirstChild.Value;
             RutaArchivos = rutaA.FirstChild.Value;
+            RutaConsultas = rutaCon.FirstChild.Value;
         }
 
 
@@ -49,18 +53,12 @@ namespace P01_RIT_v2.Clases
             XmlWriter writer = XmlWriter.Create(RutaOpciones + "Opciones.xml");
             writer.WriteStartElement("Opciones");
             writer.WriteElementString("Prefijo", Prefijo);
+            writer.WriteElementString("RutaConsultas", RutaConsultas);
             writer.WriteElementString("RutaColeccion", RutaColeccion);
             writer.WriteElementString("RutaArchivos", RutaArchivos);
             writer.WriteEndElement();
             writer.Flush();
         }
 
-        override public string ToString() {
-            string str = "Ruta de opciones: " + RutaOpciones + "\n";
-            str += "Ruta de archivos: " + RutaArchivos + "\n";
-            str += "Ruta de coleccion: " + RutaColeccion + "\n";
-            str += "Ruta de stopwords: " + RutaStopWords + "\n";
-            return str;
-        }
     }
 }
