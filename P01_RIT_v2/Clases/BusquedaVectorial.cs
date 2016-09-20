@@ -8,28 +8,28 @@ namespace P01_RIT_v2.Clases
 {
     public class BusquedaVectorial
     {
-        Invertido archivoInvertido;
 
+        /// <summary>
+        /// Archivo Invertido sobre el cual se hará la consulta.
+        /// </summary>
+        Invertido archivoInvertido;
         public Invertido ArchivoInvertido
         {
             get { return archivoInvertido; }
         }
 
 
-        // Constructor para realizar búsquedas vectoriales.
-        // Utiliza un archivo invertido creado anteriormente.
+        /// <summary>
+        /// Constructor de clase.
+        /// </summary>
+        /// <param name="archivoInvertido">
+        /// Referencia al archivo invertido.
+        /// </param>
         public BusquedaVectorial(Invertido archivoInvertido)
         {
             this.archivoInvertido = archivoInvertido;
         }
 
-
-        // Constructor para realizar búsquedas vectoriales.
-        // Abre el XML con el archivo invertido y lo crea en el momento.
-        public BusquedaVectorial(String rutaArchivoInvertido)
-        {
-            this.archivoInvertido = Invertido.importarArchivoInvertido(rutaArchivoInvertido);
-        }
 
         // Realizar una búsqueda vectorial con un término, dado un peso (opcional).
         public void buscarTermino(String termino, int peso = 2) { }

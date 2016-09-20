@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace P01_RIT_v2.Clases
 {
+    /// <summary>
+    /// Clase del Archivo Invertido.
+    /// </summary>
     [Serializable]
     [XmlRoot(ElementName = "ArchivoInvertido")]
     public class Invertido
