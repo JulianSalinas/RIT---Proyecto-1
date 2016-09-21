@@ -15,57 +15,65 @@ namespace P01_RIT_v2.Clases
         private static Opciones instance;
         public string RutaOpciones;
         public string RutaStopWords;
-        public string RutaColeccion;  // Carpeta con archivos XML de colección.   
-        public string RutaArchivos;	  // Carpeta con archivos invertidos.
+        public string RutaColeccion;
+        public string RutaArchivos;
+        public string RutaConsultas;
         public string Prefijo;
 
-        public static Opciones Instance{
-            get{
+        public static Opciones Instance
+        {
+            get
+            {
                 if ( instance == null )
                     instance = new Opciones();
                 return instance;
             }
         }
 
-        /*Lee las rutas del XML opciones*/
-
         protected Opciones() {
-            Prefijo = "PRE-1";
-            RutaOpciones = "...\\...\\Recursos\\Opciones.xml";
+            RutaOpciones = "...\\...\\Recursos\\";
             RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
             RutaColeccion = "...\\...\\Coleccion\\";
             RutaArchivos = "...\\...\\Archivos\\";
-
-            XmlDocument docOpciones = new XmlDocument();
-            docOpciones.Load(RutaOpciones);
-
-            //XmlElement opciones = docOpciones.DocumentElement;
-            //XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
-            //XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
-            //RutaColeccion = rutaC.FirstChild.Value;
-            //RutaArchivos = rutaA.FirstChild.Value;
+            RutaConsultas = "...\\...\\Consultas\\";
+            Prefijo = "PRE-1";
+            /*XmlDocument docOpciones = new XmlDocument();
+            docOpciones.Load(RutaOpciones + "Opciones.xml");
+            XmlElement opciones = docOpciones.DocumentElement;
+            XmlElement pre = (XmlElement) opciones.GetElementsByTagName("Prefijo")[0];
+            XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
+            XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
+            XmlElement rutaCon = (XmlElement) opciones.GetElementsByTagName("RutaConsultas")[0];
+            Prefijo = pre.FirstChild.Value;
+            RutaColeccion = rutaC.FirstChild.Value;
+            RutaArchivos = rutaA.FirstChild.Value;
+            RutaConsultas = rutaCon.FirstChild.Value;*/
         }
 
-        /*Sobrescribe el archivo de opciones del proyecto*/
 
         public void guardarOpciones() {
-            XmlWriter writer = XmlWriter.Create(RutaOpciones);
+            XmlWriter writer = XmlWriter.Create(RutaOpciones + "Opciones.xml");
             writer.WriteStartElement("Opciones");
+            writer.WriteElementString("Prefijo", Prefijo);
+            writer.WriteElementString("RutaConsultas", RutaConsultas);
             writer.WriteElementString("RutaColeccion", RutaColeccion);
             writer.WriteElementString("RutaArchivos", RutaArchivos);
             writer.WriteEndElement();
             writer.Flush();
+            writer.Close();
         }
-        
 
-        override public string ToString() {
-            string str = "Ruta de opciones: " + RutaOpciones + "\n";
-            str += "Ruta de archivos: " + RutaArchivos + "\n";
-            str += "Ruta de coleccion: " + RutaColeccion + "\n";
-            str += "Ruta de stopwords: " + RutaStopWords + "\n";
+        public override string ToString() {
+            string str = "";
+            str += RutaOpciones + "\n";
+            str += RutaStopWords + "\n";
+            str += RutaColeccion + "\n";
+            str += RutaArchivos + "\n";
+            str += RutaConsultas + "\n";
+            str += Prefijo + "\n";
             return str;
         }
-      
+
 
 
     }
