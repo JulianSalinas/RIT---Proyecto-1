@@ -38,18 +38,15 @@ namespace P01_RIT_v2.Clases
         /// Instancia reservada para usar patrón Singleton.
         /// </summary>
         [NonSerialized]
-        private Invertido instance;
+        private static Invertido instance;
 
         [XmlIgnore]
-        public Invertido Instance
+        public static Invertido Instance
         {
             get
             {
-                // Si el Singleton no tiene documentos registrados, por consecuencia no se ha inicializado.
-                if (instance.Documentos.Count == 0)
-                {
-                    instance.indexarColeccion();
-                }
+                if ( instance == null )
+                    instance = new Invertido();
                 return instance;
             }
         }
@@ -64,13 +61,10 @@ namespace P01_RIT_v2.Clases
         }
 
 
-        
-
-
         /// <summary>
         /// Genera los Postings del archivo invertido.
         /// </summary>
-        private void indexarColeccion() {
+        public void indexarColeccion() {
             cargarDocumentos();
             crearDiccionario();
 
@@ -150,7 +144,7 @@ namespace P01_RIT_v2.Clases
         /// Nombre del archivo XML que será creado. No insertar extensión.
         /// Si no se ingresa un nombre se utiliza la fecha y hora del sistema. 
         /// </param>
-        public void exportarArchivoInvertido(String nombreArchivoPostings = "")
+        public static void exportarArchivoInvertido(String nombreArchivoPostings = "")
         {
             // Regex para verificar que archivo tiene nombre válido.
             Regex caracteresInvalidos = new Regex("[" + Regex.Escape(System.IO.Path.GetInvalidFileNameChars().ToString()) + "]");
@@ -168,7 +162,7 @@ namespace P01_RIT_v2.Clases
             {
                 System.Xml.Serialization.XmlSerializer serializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
                 System.IO.FileStream archivoSalida = System.IO.File.Create(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
-                serializador.Serialize(archivoSalida, this);
+                serializador.Serialize(archivoSalida, instance);
                 archivoSalida.Close();
             }
             catch (System.IO.PathTooLongException e)
@@ -189,10 +183,10 @@ namespace P01_RIT_v2.Clases
         /// Importa el contenido de un archivo XML para generar un Archivo Invertido. El archivo debe estar guardado en la carpeta por defecto del programa.
         /// </summary>
         /// <param name="nombreArchivoPostings">
-        /// Nombre del archivo XML a cargar. El nombre no debe tener la extensión (.xml).
+        /// Nombre del archivo XML a cargar. El nombre debe tener la extensión (.xml).
         /// </param>
         /// <returns></returns>
-        public static Invertido importarArchivoInvertido(String nombreArchivoPostings)
+        public static void importarArchivoInvertido(string nombreArchivoPostings)
         {
             // Regex para verificar que archivo tiene nombre válido.
             Regex caracteresInvalidos = new Regex("[" + Regex.Escape(System.IO.Path.GetInvalidFileNameChars().ToString()) + "]");
@@ -205,16 +199,12 @@ namespace P01_RIT_v2.Clases
             {
                 throw new Exception("El nombre de archivo ingresado no es válido.");
             }
-            nombreArchivoPostings += ".xml";
-
             try
             {
                 System.Xml.Serialization.XmlSerializer deserializador = new System.Xml.Serialization.XmlSerializer(typeof(Invertido));
                 System.IO.FileStream archivoEntrada = System.IO.File.OpenRead(Opciones.Instance.RutaArchivos + nombreArchivoPostings);
-                Invertido invertidoAbierto = (Invertido)deserializador.Deserialize(archivoEntrada);
+                instance = (Invertido)deserializador.Deserialize(archivoEntrada);
                 archivoEntrada.Close();
-
-                return invertidoAbierto;
             }
             catch (FileNotFoundException e)
             {
