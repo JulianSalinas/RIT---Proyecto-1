@@ -35,6 +35,26 @@ namespace P01_RIT_v2.Clases
         public string rutaArchivoInvertido;
 
         /// <summary>
+        /// Instancia reservada para usar patrón Singleton.
+        /// </summary>
+        [NonSerialized]
+        private Invertido instance;
+
+        [XmlIgnore]
+        public Invertido Instance
+        {
+            get
+            {
+                // Si el Singleton no tiene documentos registrados, por consecuencia no se ha inicializado.
+                if (instance.Documentos.Count == 0)
+                {
+                    instance.indexarColeccion();
+                }
+                return instance;
+            }
+        }
+
+        /// <summary>
         /// Constructor por defecto. Necesario para serializar y deserializar archivo invertido.
         /// </summary>
         public Invertido() {
@@ -42,6 +62,10 @@ namespace P01_RIT_v2.Clases
             Postings = new List<Posting>();
             Documentos = new List<Documento>();
         }
+
+
+        
+
 
         /// <summary>
         /// Genera los Postings del archivo invertido.

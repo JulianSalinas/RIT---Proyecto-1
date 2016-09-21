@@ -37,10 +37,13 @@
   <ItemGroup>
     <Compile Include="Clases\BusquedaVectorial.cs" />
     <Compile Include="Clases\Documento.cs" />
+    <Compile Include="Clases\DocumentoRanking.cs" />
+    <Compile Include="Clases\InterfazConsola.cs" />
     <Compile Include="Clases\Invertido.cs" />
     <Compile Include="Clases\Posting.cs" />
     <Compile Include="Clases\Programa.cs" />
     <Compile Include="Clases\Opciones.cs" />
+    <Compile Include="Clases\Ranking.cs" />
     <Compile Include="Clases\Stopwords.cs" />
     <Compile Include="Clases\Termino.cs" />
   </ItemGroup>

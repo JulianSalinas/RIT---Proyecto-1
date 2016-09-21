@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace P01_RIT_v2.Clases
 {
@@ -17,6 +13,7 @@ namespace P01_RIT_v2.Clases
         /// Posición del documento.
         /// </summary>
         private int posicion;
+
         public int Posicion
         {
             get { return posicion; }
@@ -27,6 +24,7 @@ namespace P01_RIT_v2.Clases
         /// Identificador del documento.
         /// </summary>
         private int idDocumento;
+
         private int IdDocumento
         {
             get { return idDocumento; }
@@ -37,10 +35,42 @@ namespace P01_RIT_v2.Clases
         /// Índice de similitud del documento con respecto a la consulta.
         /// </summary>
         private double similitud;
+
         public double Similitud
         {
             get { return similitud; }
             set { similitud = value; }
+        }
+
+        /// <summary>
+        /// Ruta del documento.
+        /// </summary>
+        private string rutaDocumento;
+
+        public string RutaDocumento
+        {
+            get { return rutaDocumento; }
+            set { rutaDocumento = value; }
+        }
+
+        /// <summary>
+        /// Atributo "taxon-name" del documento.
+        /// </summary>
+        private string taxonNameDocumento;
+        public string TaxonNameDocumento
+        {
+            get { return taxonNameDocumento; }
+            set { taxonNameDocumento = value; }
+        }
+
+        /// <summary>
+        /// Atributo "rank" del documento.
+        /// </summary>
+        private string rankDocumento;
+        public string RankDocumento
+        {
+            get { return rankDocumento; }
+            set { rankDocumento = value; }
         }
 
         /// <summary>
@@ -51,23 +81,35 @@ namespace P01_RIT_v2.Clases
             posicion = 0;
             idDocumento = -1;
             similitud = 0;
+            rutaDocumento = "";
+            taxonNameDocumento = "";
+            rankDocumento = "";
         }
 
         /// <summary>
-        /// Constructor de objeto.
+        /// Constructor del escalafón del documento
         /// </summary>
-        /// <param name="posicion">Posición del documento en el escalafón.</param>
-        /// <param name="idDocumento">Identificador del documento en el escalafón.</param>
-        /// <param name="similitud">Índice de similitud del documento con respecto a la consulta.</param>
-        public DocumentoRanking(int posicion, int idDocumento, double similitud)
+        /// <param name="posicion">Posición del documento dentro del Ranking</param>
+        /// <param name="similitud">Índice de similitud del documento</param>
+        /// <param name="documento">Información del documento</param>
+        public DocumentoRanking(int posicion, double similitud, Documento documento)
         {
             this.posicion = posicion;
-            this.idDocumento = idDocumento;
             this.similitud = similitud;
+            try
+            {
+                this.rutaDocumento = documento.Ruta;
+                this.taxonNameDocumento = documento.getTaxonName();
+                this.rankDocumento = documento.getRank();
+            }
+            catch(NullReferenceException e)
+            {
+                throw new Exception("El documento ingresado es nulo.");
+            }
         }
 
         /// <summary>
-        /// Implementación de CompareTo para el ranking del documento. 
+        /// Implementación de CompareTo para el ranking del documento.
         /// Ordena dos rankings siguiendo dos criterios: similitud (descendente) y número del documento (ascendente)
         /// </summary>
         /// <param name="other">Segundo objeto DocumentoRanking para realizar comparación.</param>
@@ -78,7 +120,8 @@ namespace P01_RIT_v2.Clases
             {
                 return -1;
             }
-            else if (this.similitud < other.similitud){
+            else if (this.similitud < other.similitud)
+            {
                 return 1;
             }
             else if (this.idDocumento < other.idDocumento)

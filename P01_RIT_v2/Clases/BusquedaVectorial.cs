@@ -3,20 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace P01_RIT_v2.Clases
 {
+    [Serializable]
     public class BusquedaVectorial
     {
 
         /// <summary>
         /// Archivo Invertido sobre el cual se hará la consulta.
         /// </summary>
-        Invertido archivoInvertido;
+        private Invertido archivoInvertido;
+
+        [XmlIgnore]
         public Invertido ArchivoInvertido
         {
             get { return archivoInvertido; }
         }
+
+
+        private string rutaArchivoInvertido;
+        public string RutaArchivoInvertido
+        {
+            get { return rutaArchivoInvertido; }
+            set { rutaArchivoInvertido = value; }
+        }
+
+        private DateTime fechaHoraConsulta;
+
 
 
         /// <summary>
