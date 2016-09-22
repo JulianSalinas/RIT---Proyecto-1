@@ -7,7 +7,7 @@ namespace P01_RIT_v2.Clases
     /// Objeto que registra la posición de un documento dentro de una lista de ranking (escalafón).
     /// </summary>
     [Serializable]
-    public class DocumentoRanking : IComparable<DocumentoRanking>, IEqualityComparer<DocumentoRanking>
+    public class RankingDocumento : IComparable<RankingDocumento>, IEqualityComparer<RankingDocumento>
     {
         /// <summary>
         /// Posición del documento.
@@ -24,8 +24,7 @@ namespace P01_RIT_v2.Clases
         /// Identificador del documento.
         /// </summary>
         private int idDocumento;
-
-        private int IdDocumento
+        public int IdDocumento
         {
             get { return idDocumento; }
             set { idDocumento = value; }
@@ -35,7 +34,6 @@ namespace P01_RIT_v2.Clases
         /// Índice de similitud del documento con respecto a la consulta.
         /// </summary>
         private double similitud;
-
         public double Similitud
         {
             get { return similitud; }
@@ -54,7 +52,7 @@ namespace P01_RIT_v2.Clases
         }
 
         /// <summary>
-        /// Atributo "taxon-name" del documento.
+        /// Atributo "name" del nodo "taxon_identification" del documento.
         /// </summary>
         private string taxonNameDocumento;
         public string TaxonNameDocumento
@@ -64,26 +62,26 @@ namespace P01_RIT_v2.Clases
         }
 
         /// <summary>
-        /// Atributo "rank" del documento.
+        /// Atributo "rank" del nodo "taxon_identification" del documento.
         /// </summary>
-        private string rankDocumento;
-        public string RankDocumento
+        private string taxonRank;
+        public string TaxonRank
         {
-            get { return rankDocumento; }
-            set { rankDocumento = value; }
+            get { return taxonRank; }
+            set { taxonRank = value; }
         }
 
         /// <summary>
         /// Constructor por defecto. Necesario para serializar y deserializar objeto.
         /// </summary>
-        public DocumentoRanking()
+        public RankingDocumento()
         {
             posicion = 0;
             idDocumento = -1;
             similitud = 0;
             rutaDocumento = "";
             taxonNameDocumento = "";
-            rankDocumento = "";
+            taxonRank = "";
         }
 
         /// <summary>
@@ -92,15 +90,16 @@ namespace P01_RIT_v2.Clases
         /// <param name="posicion">Posición del documento dentro del Ranking</param>
         /// <param name="similitud">Índice de similitud del documento</param>
         /// <param name="documento">Información del documento</param>
-        public DocumentoRanking(int posicion, double similitud, Documento documento)
+        public RankingDocumento(Documento documento, int posicion = 0, double similitud = 0)
         {
             this.posicion = posicion;
             this.similitud = similitud;
             try
             {
+                this.idDocumento = documento.Id;
                 this.rutaDocumento = documento.Ruta;
                 this.taxonNameDocumento = documento.getTaxonName();
-                this.rankDocumento = documento.getRank();
+                this.taxonRank = documento.getRank();
             }
             catch(NullReferenceException e)
             {
@@ -108,13 +107,14 @@ namespace P01_RIT_v2.Clases
             }
         }
 
+
         /// <summary>
         /// Implementación de CompareTo para el ranking del documento.
         /// Ordena dos rankings siguiendo dos criterios: similitud (descendente) y número del documento (ascendente)
         /// </summary>
-        /// <param name="other">Segundo objeto DocumentoRanking para realizar comparación.</param>
+        /// <param name="other">Segundo objeto RankingDocumento para realizar comparación.</param>
         /// <returns></returns>
-        public int CompareTo(DocumentoRanking other)
+        public int CompareTo(RankingDocumento other)
         {
             if (this.similitud > other.similitud)
             {
@@ -136,22 +136,22 @@ namespace P01_RIT_v2.Clases
         }
 
         /// <summary>
-        /// Implementación de Equals para DocumentoRanking. Dos objetos de este tipo son iguales si tienen la misma posición y número de documento.
+        /// Implementación de Equals para RankingDocumento. Dos objetos de este tipo son iguales si tienen la misma posición y número de documento.
         /// </summary>
-        /// <param name="x">Primer objeto DocumentoRanking</param>
-        /// <param name="y">Segundo objeto DocumentoRanking</param>
+        /// <param name="x">Primer objeto RankingDocumento</param>
+        /// <param name="y">Segundo objeto RankingDocumento</param>
         /// <returns>True si cumplen la condición de igualdad. False en caso contrario.</returns>
-        public bool Equals(DocumentoRanking x, DocumentoRanking y)
+        public bool Equals(RankingDocumento x, RankingDocumento y)
         {
             return ((x.posicion == y.posicion) && (x.idDocumento == y.idDocumento));
         }
 
         /// <summary>
-        /// Implementación del GetHashCode para DocumentoRanking. Obtiene el valor hash del objeto.
+        /// Implementación del GetHashCode para RankingDocumento. Obtiene el valor hash del objeto.
         /// </summary>
         /// <param name="obj">Objeto a consultar.</param>
         /// <returns>Valor hash del objeto.</returns>
-        public int GetHashCode(DocumentoRanking obj)
+        public int GetHashCode(RankingDocumento obj)
         {
             return (obj.posicion * obj.idDocumento);
         }

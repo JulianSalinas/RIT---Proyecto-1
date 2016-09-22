@@ -35,14 +35,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Clases\Vectorial.cs" />
+    <Compile Include="Clases\BusquedaEstructurada.cs" />
+    <Compile Include="Clases\BusquedaVectorial.cs" />
+    <Compile Include="Clases\EntradaSalidaXml.cs" />
     <Compile Include="Clases\Documento.cs" />
-    <Compile Include="Clases\DocumentoRanking.cs" />
+    <Compile Include="Clases\RankingDocumento.cs" />
     <Compile Include="Clases\Invertido.cs" />
     <Compile Include="Clases\Posting.cs" />
     <Compile Include="Clases\Programa.cs" />
     <Compile Include="Clases\Opciones.cs" />
-    <Compile Include="Clases\Ranking.cs" />
     <Compile Include="Clases\Stopwords.cs" />
     <Compile Include="Clases\Termino.cs" />
     <Compile Include="UI\MainWindow.cs">

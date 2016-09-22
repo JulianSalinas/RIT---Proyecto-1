@@ -32,7 +32,7 @@ namespace P01_RIT_v2.Clases
         private void cargarTerminos() {
             foreach ( XmlElement word in xmlDocument.DocumentElement.ChildNodes ) {
                 string original = word.FirstChild.Value;
-                string sinAcentos = quitarAcentos(original);
+                string sinAcentos = reemplazarAcentos(original);
                 terminos.Add(sinAcentos);
             }
         }
@@ -41,7 +41,12 @@ namespace P01_RIT_v2.Clases
             return terminos.Exists(x => x.ToString() == term);
         }
 
-        public string quitarAcentos( string inputString ) {
+        /// <summary>
+        /// Reemplaza las vocales acentuadas de un string por vocales sin acento.
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
+        public string reemplazarAcentos( string inputString ) {
             Regex a = new Regex("[á|à|ä|â]", RegexOptions.Compiled);
             Regex e = new Regex("[é|è|ë|ê]", RegexOptions.Compiled);
             Regex i = new Regex("[í|ì|ï|î]", RegexOptions.Compiled);

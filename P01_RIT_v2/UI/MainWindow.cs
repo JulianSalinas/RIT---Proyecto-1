@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static P01_RIT_v2.Clases.Vectorial;
+//using static P01_RIT_v2.Clases.Vectorial;
 
 namespace P01_RIT_v2.UI
 {
@@ -25,13 +25,17 @@ namespace P01_RIT_v2.UI
 
         private void buttonIndexar_Click( object sender, EventArgs e ) {
             MessageBox.Show("Espere mientras se indexa la coleccion");
-            Invertido.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text);
+
+            // Instance (Singleton) exporta su contenido.
+            Invertido.Instance.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text);
+
+            
             //Console.Write(Invertido.Instance.ToString());
             MessageBox.Show("Indexación finalizada");
         }
 
         private void buttonColeccion_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoge la carpeda donde esta almacenada la colección";
+            folderBrowserDialog.Description = "Escoga la carpeta donde está almacenada la colección";
             folderBrowserDialog.ShowDialog();
             textBoxColeccion.Text = folderBrowserDialog.SelectedPath + "\\";
             Opciones.Instance.RutaColeccion = folderBrowserDialog.SelectedPath + "\\";
@@ -39,7 +43,7 @@ namespace P01_RIT_v2.UI
         }
 
         private void buttonInvertido_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoge la carpeda donde almacenará el archivo invertido";
+            folderBrowserDialog.Description = "Escoge la carpeta donde almacenará el archivo invertido";
             folderBrowserDialog.ShowDialog();
             textBoxInvertido.Text = folderBrowserDialog.SelectedPath + "\\";
             Opciones.Instance.RutaArchivos = folderBrowserDialog.SelectedPath + "\\";
@@ -47,7 +51,7 @@ namespace P01_RIT_v2.UI
         }
 
         private void buttonInvertidoConsultas_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoge la carpeda donde almacenarán los resultados de las consultas";
+            folderBrowserDialog.Description = "Escoge la carpeta donde almacenarán los resultados de las consultas";
             folderBrowserDialog.ShowDialog();
             textBoxInvertidoConsultas.Text = folderBrowserDialog.SelectedPath + "\\";
             Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath + "\\";
@@ -57,10 +61,11 @@ namespace P01_RIT_v2.UI
         private void buttonRutaArchivoInvertido_Click( object sender, EventArgs e ) {
             try {
                 if ( openFileDialog.FileName != "" || openFileDialog.FileName != null ) {
-                    openFileDialog.Title = "Escoge la carpeda donde almacenarán los resultados de las consultas";
+                    openFileDialog.Title = "Escoga el archivo XML con los detalles del archivo invertido";
                     openFileDialog.ShowDialog();
                     textBoxRutaArchivoInvertido.Text = openFileDialog.FileName;
-                    Invertido.importarArchivoInvertido(openFileDialog.SafeFileName);
+
+                    Invertido.Instance = Invertido.importarArchivoInvertido(openFileDialog.SafeFileName);
                 }
             }
             catch(Exception ex) {
@@ -68,13 +73,25 @@ namespace P01_RIT_v2.UI
             }
         }
 
-        private void buttonConsultaVectorial_Click( object sender, EventArgs e ) {
-            Vectorial consulta = new Vectorial(textBoxInvertidoConsultas.Text);
-            List<TerminoConsulta> terminosConsulta = consulta.procesarTerminosDesdeConsulta();
-
-            /*Comprobar terminos de la consulta*/
-            foreach ( TerminoConsulta term in terminosConsulta )
-                Console.Write("Peso: " + term.Peso + "\tTermino: " + term.Contenido + "\n");
+        private void buttonConsultaVectorial_Click(object sender, EventArgs e) {
+            try
+            {
+                if (textBoxConsultaVectorial.Equals(""))
+                {
+                    throw new Exception("No puede realizar una consulta sin términos.");
+                }
+                else
+                {
+                    BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, textBoxColeccion.Text, textBoxConsultaVectorial.Text);
+                    string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                        " Busqueda Vect " + nuevaBusqueda.FechaHoraBusqueda.ToString("dd-MM-yyyy hh-mm-ss tt") + ".xml";
+                    nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
@@ -82,9 +99,13 @@ namespace P01_RIT_v2.UI
         }
 
         /*Este es del boton de consultas estructuradas*/
-        private void metroTextButton1_Click( object sender, EventArgs e ) {
+        private void botonConsultaEstructurada_Click( object sender, EventArgs e ) {
 
         }
 
+        private void openFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }
