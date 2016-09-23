@@ -27,6 +27,9 @@
         private void InitializeComponent() {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.textBoxRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox();
+            this.buttonRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
+            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.textBoxNombreInvertido = new MetroFramework.Controls.MetroTextBox();
             this.textBoxInvertido = new MetroFramework.Controls.MetroTextBox();
@@ -43,16 +46,13 @@
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
-            this.metroTextButton1 = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.buttonConsultaEstruct = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
+            this.textBoxConsultaEstruct = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.buttonConsultaVectorial = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.textBoxConsultaVectorial = new MetroFramework.Controls.MetroTextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.textBoxRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox();
-            this.buttonRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
-            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -94,6 +94,58 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Opciones e indexado";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBoxRutaArchivoInvertido
+            // 
+            // 
+            // 
+            // 
+            this.textBoxRutaArchivoInvertido.CustomButton.Image = null;
+            this.textBoxRutaArchivoInvertido.CustomButton.Location = new System.Drawing.Point(502, 1);
+            this.textBoxRutaArchivoInvertido.CustomButton.Name = "";
+            this.textBoxRutaArchivoInvertido.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.textBoxRutaArchivoInvertido.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textBoxRutaArchivoInvertido.CustomButton.TabIndex = 1;
+            this.textBoxRutaArchivoInvertido.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textBoxRutaArchivoInvertido.CustomButton.UseSelectable = true;
+            this.textBoxRutaArchivoInvertido.CustomButton.Visible = false;
+            this.textBoxRutaArchivoInvertido.Lines = new string[0];
+            this.textBoxRutaArchivoInvertido.Location = new System.Drawing.Point(35, 314);
+            this.textBoxRutaArchivoInvertido.MaxLength = 32767;
+            this.textBoxRutaArchivoInvertido.Name = "textBoxRutaArchivoInvertido";
+            this.textBoxRutaArchivoInvertido.PasswordChar = '\0';
+            this.textBoxRutaArchivoInvertido.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxRutaArchivoInvertido.SelectedText = "";
+            this.textBoxRutaArchivoInvertido.SelectionLength = 0;
+            this.textBoxRutaArchivoInvertido.SelectionStart = 0;
+            this.textBoxRutaArchivoInvertido.Size = new System.Drawing.Size(524, 23);
+            this.textBoxRutaArchivoInvertido.TabIndex = 33;
+            this.textBoxRutaArchivoInvertido.UseSelectable = true;
+            this.textBoxRutaArchivoInvertido.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textBoxRutaArchivoInvertido.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // buttonRutaArchivoInvertido
+            // 
+            this.buttonRutaArchivoInvertido.Image = null;
+            this.buttonRutaArchivoInvertido.Location = new System.Drawing.Point(565, 314);
+            this.buttonRutaArchivoInvertido.Name = "buttonRutaArchivoInvertido";
+            this.buttonRutaArchivoInvertido.Size = new System.Drawing.Size(51, 23);
+            this.buttonRutaArchivoInvertido.Style = MetroFramework.MetroColorStyle.Pink;
+            this.buttonRutaArchivoInvertido.TabIndex = 35;
+            this.buttonRutaArchivoInvertido.Text = "...";
+            this.buttonRutaArchivoInvertido.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.buttonRutaArchivoInvertido.UseSelectable = true;
+            this.buttonRutaArchivoInvertido.UseVisualStyleBackColor = true;
+            this.buttonRutaArchivoInvertido.Click += new System.EventHandler(this.buttonRutaArchivoInvertido_Click);
+            // 
+            // metroLabel8
+            // 
+            this.metroLabel8.AutoSize = true;
+            this.metroLabel8.Location = new System.Drawing.Point(35, 292);
+            this.metroLabel8.Name = "metroLabel8";
+            this.metroLabel8.Size = new System.Drawing.Size(293, 19);
+            this.metroLabel8.TabIndex = 34;
+            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas";
             // 
             // metroLabel2
             // 
@@ -346,8 +398,8 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.metroLabel7);
-            this.tabPage2.Controls.Add(this.metroTextButton1);
-            this.tabPage2.Controls.Add(this.metroTextBox1);
+            this.tabPage2.Controls.Add(this.buttonConsultaEstruct);
+            this.tabPage2.Controls.Add(this.textBoxConsultaEstruct);
             this.tabPage2.Controls.Add(this.metroLabel3);
             this.tabPage2.Controls.Add(this.buttonConsultaVectorial);
             this.tabPage2.Controls.Add(this.textBoxConsultaVectorial);
@@ -368,47 +420,48 @@
             this.metroLabel7.TabIndex = 27;
             this.metroLabel7.Text = "Consulta estructurada";
             // 
-            // metroTextButton1
+            // buttonConsultaEstruct
             // 
-            this.metroTextButton1.Image = null;
-            this.metroTextButton1.Location = new System.Drawing.Point(439, 145);
-            this.metroTextButton1.Name = "metroTextButton1";
-            this.metroTextButton1.Size = new System.Drawing.Size(183, 23);
-            this.metroTextButton1.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroTextButton1.TabIndex = 26;
-            this.metroTextButton1.Text = "Realizar consulta";
-            this.metroTextButton1.UseSelectable = true;
-            this.metroTextButton1.UseVisualStyleBackColor = true;
-            this.metroTextButton1.Click += new System.EventHandler(this.metroTextButton1_Click);
+            this.buttonConsultaEstruct.Image = null;
+            this.buttonConsultaEstruct.Location = new System.Drawing.Point(439, 145);
+            this.buttonConsultaEstruct.Name = "buttonConsultaEstruct";
+            this.buttonConsultaEstruct.Size = new System.Drawing.Size(183, 23);
+            this.buttonConsultaEstruct.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonConsultaEstruct.TabIndex = 26;
+            this.buttonConsultaEstruct.Text = "Realizar consulta";
+            this.buttonConsultaEstruct.UseSelectable = true;
+            this.buttonConsultaEstruct.UseVisualStyleBackColor = true;
+            this.buttonConsultaEstruct.Click += new System.EventHandler(this.buttonConsultaEstruct_Click);
             // 
-            // metroTextBox1
-            // 
-            // 
+            // textBoxConsultaEstruct
             // 
             // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(375, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(36, 145);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.Size = new System.Drawing.Size(397, 23);
-            this.metroTextBox1.TabIndex = 25;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // 
+            this.textBoxConsultaEstruct.CustomButton.Image = null;
+            this.textBoxConsultaEstruct.CustomButton.Location = new System.Drawing.Point(375, 1);
+            this.textBoxConsultaEstruct.CustomButton.Name = "";
+            this.textBoxConsultaEstruct.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.textBoxConsultaEstruct.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textBoxConsultaEstruct.CustomButton.TabIndex = 1;
+            this.textBoxConsultaEstruct.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textBoxConsultaEstruct.CustomButton.UseSelectable = true;
+            this.textBoxConsultaEstruct.CustomButton.Visible = false;
+            this.textBoxConsultaEstruct.Lines = new string[0];
+            this.textBoxConsultaEstruct.Location = new System.Drawing.Point(36, 145);
+            this.textBoxConsultaEstruct.MaxLength = 32767;
+            this.textBoxConsultaEstruct.Name = "textBoxConsultaEstruct";
+            this.textBoxConsultaEstruct.PasswordChar = '\0';
+            this.textBoxConsultaEstruct.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxConsultaEstruct.SelectedText = "";
+            this.textBoxConsultaEstruct.SelectionLength = 0;
+            this.textBoxConsultaEstruct.SelectionStart = 0;
+            this.textBoxConsultaEstruct.Size = new System.Drawing.Size(397, 23);
+            this.textBoxConsultaEstruct.TabIndex = 25;
+            this.textBoxConsultaEstruct.UseSelectable = true;
+            this.textBoxConsultaEstruct.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textBoxConsultaEstruct.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.textBoxConsultaEstruct.Click += new System.EventHandler(this.metroTextBox1_Click);
             // 
             // metroLabel3
             // 
@@ -464,58 +517,7 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            // 
-            // textBoxRutaArchivoInvertido
-            // 
-            // 
-            // 
-            // 
-            this.textBoxRutaArchivoInvertido.CustomButton.Image = null;
-            this.textBoxRutaArchivoInvertido.CustomButton.Location = new System.Drawing.Point(502, 1);
-            this.textBoxRutaArchivoInvertido.CustomButton.Name = "";
-            this.textBoxRutaArchivoInvertido.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.textBoxRutaArchivoInvertido.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxRutaArchivoInvertido.CustomButton.TabIndex = 1;
-            this.textBoxRutaArchivoInvertido.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.textBoxRutaArchivoInvertido.CustomButton.UseSelectable = true;
-            this.textBoxRutaArchivoInvertido.CustomButton.Visible = false;
-            this.textBoxRutaArchivoInvertido.Lines = new string[0];
-            this.textBoxRutaArchivoInvertido.Location = new System.Drawing.Point(35, 314);
-            this.textBoxRutaArchivoInvertido.MaxLength = 32767;
-            this.textBoxRutaArchivoInvertido.Name = "textBoxRutaArchivoInvertido";
-            this.textBoxRutaArchivoInvertido.PasswordChar = '\0';
-            this.textBoxRutaArchivoInvertido.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.textBoxRutaArchivoInvertido.SelectedText = "";
-            this.textBoxRutaArchivoInvertido.SelectionLength = 0;
-            this.textBoxRutaArchivoInvertido.SelectionStart = 0;
-            this.textBoxRutaArchivoInvertido.Size = new System.Drawing.Size(524, 23);
-            this.textBoxRutaArchivoInvertido.TabIndex = 33;
-            this.textBoxRutaArchivoInvertido.UseSelectable = true;
-            this.textBoxRutaArchivoInvertido.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.textBoxRutaArchivoInvertido.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // buttonRutaArchivoInvertido
-            // 
-            this.buttonRutaArchivoInvertido.Image = null;
-            this.buttonRutaArchivoInvertido.Location = new System.Drawing.Point(565, 314);
-            this.buttonRutaArchivoInvertido.Name = "buttonRutaArchivoInvertido";
-            this.buttonRutaArchivoInvertido.Size = new System.Drawing.Size(51, 23);
-            this.buttonRutaArchivoInvertido.Style = MetroFramework.MetroColorStyle.Pink;
-            this.buttonRutaArchivoInvertido.TabIndex = 35;
-            this.buttonRutaArchivoInvertido.Text = "...";
-            this.buttonRutaArchivoInvertido.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.buttonRutaArchivoInvertido.UseSelectable = true;
-            this.buttonRutaArchivoInvertido.UseVisualStyleBackColor = true;
-            this.buttonRutaArchivoInvertido.Click += new System.EventHandler(this.buttonRutaArchivoInvertido_Click);
-            // 
-            // metroLabel8
-            // 
-            this.metroLabel8.AutoSize = true;
-            this.metroLabel8.Location = new System.Drawing.Point(35, 292);
-            this.metroLabel8.Name = "metroLabel8";
-            this.metroLabel8.Size = new System.Drawing.Size(293, 19);
-            this.metroLabel8.TabIndex = 34;
-            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas";
+            this.openFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_FileOk);
             // 
             // MainWindow
             // 
@@ -554,8 +556,8 @@
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private System.Windows.Forms.TabPage tabPage2;
         private MetroFramework.Controls.MetroLabel metroLabel7;
-        private MetroFramework.Controls.MetroTextBox.MetroTextButton metroTextButton1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonConsultaEstruct;
+        private MetroFramework.Controls.MetroTextBox textBoxConsultaEstruct;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonConsultaVectorial;
         private MetroFramework.Controls.MetroTextBox textBoxConsultaVectorial;
