@@ -65,7 +65,6 @@ namespace P01_RIT_v2.UI
                     openFileDialog.Title = "Escoga el archivo XML con los detalles del archivo invertido";
                     openFileDialog.ShowDialog();
                     textBoxRutaArchivoInvertido.Text = openFileDialog.FileName;
-
                     Invertido.Instance = Invertido.importarArchivoInvertido(openFileDialog.SafeFileName);
                 }
             }
@@ -83,7 +82,7 @@ namespace P01_RIT_v2.UI
                 }
                 else
                 {
-                    BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, textBoxColeccion.Text, textBoxConsultaVectorial.Text);
+                    BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, Opciones.Instance.RutaColeccion, textBoxConsultaVectorial.Text);
                     string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
                         " Busqueda Vect " + nuevaBusqueda.FechaHoraBusqueda.ToString("dd-MM-yyyy hh-mm-ss tt") + ".xml";
                     nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
@@ -93,10 +92,6 @@ namespace P01_RIT_v2.UI
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
-            Opciones.Instance.Prefijo = textBoxPrefijo.Text;
         }
 
         /*Este es del boton de consultas estructuradas*/
@@ -136,7 +131,7 @@ namespace P01_RIT_v2.UI
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -148,6 +143,10 @@ namespace P01_RIT_v2.UI
         private void metroTextBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
+            Opciones.Instance.Prefijo = textBoxPrefijo.Text;
         }
     }
 }

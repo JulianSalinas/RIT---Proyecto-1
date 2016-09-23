@@ -31,13 +31,23 @@ namespace P01_RIT_v2.Clases
         }
 
         protected Opciones() {
-            RutaOpciones = Path.GetFullPath("...\\...\\Recursos\\");
-            RutaStopWords = RutaOpciones += "Stopwords.xml";
-            RutaColeccion = Path.GetFullPath("...\\...\\Coleccion\\");
-            RutaArchivos = Path.GetFullPath("...\\...\\Archivos\\");
-            RutaConsultas = Path.GetFullPath("...\\...\\Archivos\\");
-            Prefijo = "PRE-1";
-            
+            RutaOpciones = "...\\...\\Recursos\\";
+            RutaStopWords = "...\\...\\Recursos\\Stopwords.xml";
+            /*RutaColeccion = "...\\...\\Coleccion\\";
+            RutaArchivos = "...\\...\\Archivos\\";
+            RutaConsultas = "...\\...\\Consultas\\";
+            Prefijo = "PRE-1";*/
+            XmlDocument docOpciones = new XmlDocument();
+            docOpciones.Load(RutaOpciones + "Opciones.xml");
+            XmlElement opciones = docOpciones.DocumentElement;
+            XmlElement pre = (XmlElement) opciones.GetElementsByTagName("Prefijo")[0];
+            XmlElement rutaC = (XmlElement) opciones.GetElementsByTagName("RutaColeccion")[0];
+            XmlElement rutaA = (XmlElement) opciones.GetElementsByTagName("RutaArchivos")[0];
+            XmlElement rutaCon = (XmlElement) opciones.GetElementsByTagName("RutaConsultas")[0];
+            Prefijo = pre.FirstChild.Value;
+            RutaColeccion = rutaC.FirstChild.Value;
+            RutaArchivos = rutaA.FirstChild.Value;
+            RutaConsultas = rutaCon.FirstChild.Value;
         }
 
 
