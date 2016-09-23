@@ -46,8 +46,8 @@
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
-            this.metroTextButton1 = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
+            this.buttonConsultaEstruct = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
+            this.textBoxConsultaEstruct = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.buttonConsultaVectorial = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.textBoxConsultaVectorial = new MetroFramework.Controls.MetroTextBox();
@@ -398,8 +398,8 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.metroLabel7);
-            this.tabPage2.Controls.Add(this.metroTextButton1);
-            this.tabPage2.Controls.Add(this.metroTextBox1);
+            this.tabPage2.Controls.Add(this.buttonConsultaEstruct);
+            this.tabPage2.Controls.Add(this.textBoxConsultaEstruct);
             this.tabPage2.Controls.Add(this.metroLabel3);
             this.tabPage2.Controls.Add(this.buttonConsultaVectorial);
             this.tabPage2.Controls.Add(this.textBoxConsultaVectorial);
@@ -420,47 +420,48 @@
             this.metroLabel7.TabIndex = 27;
             this.metroLabel7.Text = "Consulta estructurada";
             // 
-            // metroTextButton1
+            // buttonConsultaEstruct
             // 
-            this.metroTextButton1.Image = null;
-            this.metroTextButton1.Location = new System.Drawing.Point(439, 145);
-            this.metroTextButton1.Name = "metroTextButton1";
-            this.metroTextButton1.Size = new System.Drawing.Size(183, 23);
-            this.metroTextButton1.Style = MetroFramework.MetroColorStyle.Red;
-            this.metroTextButton1.TabIndex = 26;
-            this.metroTextButton1.Text = "Realizar consulta";
-            this.metroTextButton1.UseSelectable = true;
-            this.metroTextButton1.UseVisualStyleBackColor = true;
-            this.metroTextButton1.Click += new System.EventHandler(this.botonConsultaEstructurada_Click);
+            this.buttonConsultaEstruct.Image = null;
+            this.buttonConsultaEstruct.Location = new System.Drawing.Point(439, 145);
+            this.buttonConsultaEstruct.Name = "buttonConsultaEstruct";
+            this.buttonConsultaEstruct.Size = new System.Drawing.Size(183, 23);
+            this.buttonConsultaEstruct.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonConsultaEstruct.TabIndex = 26;
+            this.buttonConsultaEstruct.Text = "Realizar consulta";
+            this.buttonConsultaEstruct.UseSelectable = true;
+            this.buttonConsultaEstruct.UseVisualStyleBackColor = true;
+            this.buttonConsultaEstruct.Click += new System.EventHandler(this.buttonConsultaEstruct_Click);
             // 
-            // metroTextBox1
-            // 
-            // 
+            // textBoxConsultaEstruct
             // 
             // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(375, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.Lines = new string[0];
-            this.metroTextBox1.Location = new System.Drawing.Point(36, 145);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.Size = new System.Drawing.Size(397, 23);
-            this.metroTextBox1.TabIndex = 25;
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // 
+            this.textBoxConsultaEstruct.CustomButton.Image = null;
+            this.textBoxConsultaEstruct.CustomButton.Location = new System.Drawing.Point(375, 1);
+            this.textBoxConsultaEstruct.CustomButton.Name = "";
+            this.textBoxConsultaEstruct.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.textBoxConsultaEstruct.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textBoxConsultaEstruct.CustomButton.TabIndex = 1;
+            this.textBoxConsultaEstruct.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textBoxConsultaEstruct.CustomButton.UseSelectable = true;
+            this.textBoxConsultaEstruct.CustomButton.Visible = false;
+            this.textBoxConsultaEstruct.Lines = new string[0];
+            this.textBoxConsultaEstruct.Location = new System.Drawing.Point(36, 145);
+            this.textBoxConsultaEstruct.MaxLength = 32767;
+            this.textBoxConsultaEstruct.Name = "textBoxConsultaEstruct";
+            this.textBoxConsultaEstruct.PasswordChar = '\0';
+            this.textBoxConsultaEstruct.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxConsultaEstruct.SelectedText = "";
+            this.textBoxConsultaEstruct.SelectionLength = 0;
+            this.textBoxConsultaEstruct.SelectionStart = 0;
+            this.textBoxConsultaEstruct.Size = new System.Drawing.Size(397, 23);
+            this.textBoxConsultaEstruct.TabIndex = 25;
+            this.textBoxConsultaEstruct.UseSelectable = true;
+            this.textBoxConsultaEstruct.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textBoxConsultaEstruct.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.textBoxConsultaEstruct.Click += new System.EventHandler(this.metroTextBox1_Click);
             // 
             // metroLabel3
             // 
@@ -555,8 +556,8 @@
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private System.Windows.Forms.TabPage tabPage2;
         private MetroFramework.Controls.MetroLabel metroLabel7;
-        private MetroFramework.Controls.MetroTextBox.MetroTextButton metroTextButton1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
+        private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonConsultaEstruct;
+        private MetroFramework.Controls.MetroTextBox textBoxConsultaEstruct;
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonConsultaVectorial;
         private MetroFramework.Controls.MetroTextBox textBoxConsultaVectorial;

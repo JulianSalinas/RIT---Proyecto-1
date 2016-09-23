@@ -152,10 +152,10 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         /// <param name="terminosConsulta">Pesos de la consulta.</param>
         /// <returns>Normal de la consulta : |Q| </returns>
-        private double calcularNormalConsulta(List<ConsultaVectorial> terminosConsulta)
+        private double calcularNormalConsulta(List<TerminoConsultaVectorial> terminosConsulta)
         {
             double sumaPesos = 0;
-            foreach (ConsultaVectorial terminoConsulta in terminosConsulta){
+            foreach (TerminoConsultaVectorial terminoConsulta in terminosConsulta){
                 sumaPesos += Math.Pow(terminoConsulta.Peso, 2);
             }
 
@@ -225,10 +225,10 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         /// <param name="terminosConsulta">Consulta refinada y separada por términos con peso.</param>
         /// <param name="diccionarioRankings">Diccionario asociado a ranking de documentos.</param>
-        private void agregarPesosRanking(List<ConsultaVectorial> terminosConsulta, Dictionary<int, RankingDocumento> diccionarioRankings)
+        private void agregarPesosRanking(List<TerminoConsultaVectorial> terminosConsulta, Dictionary<int, RankingDocumento> diccionarioRankings)
         {
             // Se recorre cadá término de la consulta para obtener sus postings asociados.
-            foreach(ConsultaVectorial terminoConsulta in terminosConsulta)
+            foreach(TerminoConsultaVectorial terminoConsulta in terminosConsulta)
             {
                 List<Posting> postingsTermino = archivoInvertido.obtenerPostingsTerminoExacto(terminoConsulta.Termino);
 
@@ -250,7 +250,7 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         /// <param name="termino">Término obtenido del procesamiento inicial.</param>
         /// <param name="terminosPreparados">Diccionario asociado a términos de consulta.</param>
-        private void procesarTermino(string termino, Dictionary<string, ConsultaVectorial> terminosPreparados)
+        private void procesarTermino(string termino, Dictionary<string, TerminoConsultaVectorial> terminosPreparados)
         {
             int pesoConsulta = 2;
 
@@ -288,7 +288,7 @@ namespace P01_RIT_v2.Clases
                         }
                         else
                         {
-                            terminosPreparados.Add(terminoConPrefijo.Contenido, new ConsultaVectorial(terminoConPrefijo.Contenido, pesoConsulta));
+                            terminosPreparados.Add(terminoConPrefijo.Contenido, new TerminoConsultaVectorial(terminoConPrefijo.Contenido, pesoConsulta));
                         }
                     }
                 }
@@ -300,7 +300,7 @@ namespace P01_RIT_v2.Clases
                     }
                     else
                     {
-                        terminosPreparados.Add(termino, new ConsultaVectorial(termino, pesoConsulta));
+                        terminosPreparados.Add(termino, new TerminoConsultaVectorial(termino, pesoConsulta));
                     }
                 }
             }
@@ -310,7 +310,7 @@ namespace P01_RIT_v2.Clases
         /// Procesa la consulta en bruto recibida para generar los términos de consulta válidos.
         /// </summary>
         /// <returns></returns>
-        private List<ConsultaVectorial> procesarConsulta()
+        private List<TerminoConsultaVectorial> procesarConsulta()
         {
             string consulta = this.consulta.ToLower();
             consulta = Stopwords.Instance.reemplazarAcentos(consulta);
@@ -327,7 +327,7 @@ namespace P01_RIT_v2.Clases
             }
 
             // Primera pasada - Procesa términos encontrados por RegEx verificando que no se consulta el término dos veces.
-            Dictionary<string, ConsultaVectorial> terminosProcesados = new Dictionary<string, ConsultaVectorial>();
+            Dictionary<string, TerminoConsultaVectorial> terminosProcesados = new Dictionary<string, TerminoConsultaVectorial>();
             foreach(string matchConsulta in listaMatchesTerminos)
             {
                 Console.WriteLine("Procesando match: " + matchConsulta);
@@ -335,8 +335,8 @@ namespace P01_RIT_v2.Clases
             }
 
             // Segunda pasada - Genera la lista de consultas vectoriales.
-            List<ConsultaVectorial> consultasVectoriales = new List<ConsultaVectorial>();
-            foreach(KeyValuePair<string, ConsultaVectorial> terminoProcesado in terminosProcesados)
+            List<TerminoConsultaVectorial> consultasVectoriales = new List<TerminoConsultaVectorial>();
+            foreach(KeyValuePair<string, TerminoConsultaVectorial> terminoProcesado in terminosProcesados)
             {
                 consultasVectoriales.Add(terminoProcesado.Value);
             }
@@ -350,7 +350,7 @@ namespace P01_RIT_v2.Clases
         public void ejecutar()
         {
             // Procesar consulta en bruto y calcular normal.
-            List<ConsultaVectorial> terminosConsulta = procesarConsulta();
+            List<TerminoConsultaVectorial> terminosConsulta = procesarConsulta();
             double normalConsulta = calcularNormalConsulta(terminosConsulta);
 
             // Se crea el nuevo escalafón y se le asocia a un diccionario para optimizar búsquedas no secuenciales.
@@ -459,7 +459,7 @@ namespace P01_RIT_v2.Clases
     /// <summary>
     /// Clase interna para estructurar cada término de la consulta vectorial.
     /// </summary>
-    public class ConsultaVectorial
+    public class TerminoConsultaVectorial
     {
         private string termino;
         public string Termino
@@ -475,7 +475,7 @@ namespace P01_RIT_v2.Clases
             set { peso = value; }
         }
 
-        public ConsultaVectorial(string termino, int peso)
+        public TerminoConsultaVectorial(string termino, int peso)
         {
             this.termino = termino;
             this.peso = peso;

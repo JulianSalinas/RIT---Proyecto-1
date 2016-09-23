@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,11 +100,52 @@ namespace P01_RIT_v2.UI
         }
 
         /*Este es del boton de consultas estructuradas*/
-        private void botonConsultaEstructurada_Click( object sender, EventArgs e ) {
+        private void buttonConsultaEstruct_Click( object sender, EventArgs e ) {
+            try
+            {
+                if (textBoxConsultaEstruct.Equals(""))
+                {
+                    throw new Exception("No puede realizar una consulta sin términos.");
+                }
+                else
+                {
+                    BusquedaVectorial busquedaVectorial = null;
+                    // Solicita el archivo de consulta vectorial que desea utilizar.
+                    try
+                    {
+                        if (openFileDialog.FileName != "" || openFileDialog.FileName != null)
+                        {
+                            openFileDialog.Title = "Escoga el archivo XML con los detalles de la consulta vectorial";
+                            openFileDialog.ShowDialog();
 
+                            busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
+
+
+                    string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                        " Busqueda Estruct " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy hh-mm-ss tt") + ".xml";
+                    nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
         }
 
         private void openFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void metroTextBox1_Click(object sender, EventArgs e)
         {
 
         }

@@ -81,6 +81,11 @@ namespace P01_RIT_v2.Clases
             {
                 throw new Exception("Error al crear el archivo.");
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+                throw e;
+            }
         }
 
 
