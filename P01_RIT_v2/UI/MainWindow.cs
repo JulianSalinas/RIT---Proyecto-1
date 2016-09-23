@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using static P01_RIT_v2.Clases.Vectorial;
+
 
 namespace P01_RIT_v2.UI
 {
