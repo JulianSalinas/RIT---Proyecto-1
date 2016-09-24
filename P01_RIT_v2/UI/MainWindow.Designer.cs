@@ -143,18 +143,18 @@
             this.metroLabel8.AutoSize = true;
             this.metroLabel8.Location = new System.Drawing.Point(35, 292);
             this.metroLabel8.Name = "metroLabel8";
-            this.metroLabel8.Size = new System.Drawing.Size(293, 19);
+            this.metroLabel8.Size = new System.Drawing.Size(296, 19);
             this.metroLabel8.TabIndex = 34;
-            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas";
+            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas:";
             // 
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
             this.metroLabel2.Location = new System.Drawing.Point(88, 35);
             this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(183, 19);
+            this.metroLabel2.Size = new System.Drawing.Size(186, 19);
             this.metroLabel2.TabIndex = 32;
-            this.metroLabel2.Text = "Nombre del archivo invertido";
+            this.metroLabel2.Text = "Nombre del archivo invertido:";
             // 
             // textBoxNombreInvertido
             // 
@@ -278,18 +278,18 @@
             this.metroLabel1.AutoSize = true;
             this.metroLabel1.Location = new System.Drawing.Point(35, 227);
             this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(294, 19);
+            this.metroLabel1.Size = new System.Drawing.Size(297, 19);
             this.metroLabel1.TabIndex = 30;
-            this.metroLabel1.Text = "Ruta para guardar los resultados de las consultas";
+            this.metroLabel1.Text = "Ruta para guardar los resultados de las consultas:";
             // 
             // metroLabel5
             // 
             this.metroLabel5.AutoSize = true;
             this.metroLabel5.Location = new System.Drawing.Point(35, 162);
             this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(219, 19);
+            this.metroLabel5.Size = new System.Drawing.Size(222, 19);
             this.metroLabel5.TabIndex = 22;
-            this.metroLabel5.Text = "Ruta para guardar archivo invertido";
+            this.metroLabel5.Text = "Ruta para guardar archivo invertido:";
             // 
             // buttonColeccion
             // 
@@ -310,9 +310,9 @@
             this.metroLabel4.AutoSize = true;
             this.metroLabel4.Location = new System.Drawing.Point(35, 100);
             this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(126, 19);
+            this.metroLabel4.Size = new System.Drawing.Size(129, 19);
             this.metroLabel4.TabIndex = 23;
-            this.metroLabel4.Text = "Ruta de la colección";
+            this.metroLabel4.Text = "Ruta de la colección:";
             // 
             // buttonIndexar
             // 
@@ -322,7 +322,7 @@
             this.buttonIndexar.Size = new System.Drawing.Size(183, 23);
             this.buttonIndexar.Style = MetroFramework.MetroColorStyle.Red;
             this.buttonIndexar.TabIndex = 20;
-            this.buttonIndexar.Text = "Indexar Coleccion";
+            this.buttonIndexar.Text = "Crear Archivo Invertido";
             this.buttonIndexar.UseSelectable = true;
             this.buttonIndexar.UseVisualStyleBackColor = true;
             this.buttonIndexar.Click += new System.EventHandler(this.buttonIndexar_Click);
@@ -391,9 +391,9 @@
             this.metroLabel6.AutoSize = true;
             this.metroLabel6.Location = new System.Drawing.Point(35, 35);
             this.metroLabel6.Name = "metroLabel6";
-            this.metroLabel6.Size = new System.Drawing.Size(47, 19);
+            this.metroLabel6.Size = new System.Drawing.Size(50, 19);
             this.metroLabel6.TabIndex = 21;
-            this.metroLabel6.Text = "Prefijo";
+            this.metroLabel6.Text = "Prefijo:";
             // 
             // tabPage2
             // 
@@ -416,9 +416,9 @@
             this.metroLabel7.AutoSize = true;
             this.metroLabel7.Location = new System.Drawing.Point(36, 123);
             this.metroLabel7.Name = "metroLabel7";
-            this.metroLabel7.Size = new System.Drawing.Size(135, 19);
+            this.metroLabel7.Size = new System.Drawing.Size(138, 19);
             this.metroLabel7.TabIndex = 27;
-            this.metroLabel7.Text = "Consulta estructurada";
+            this.metroLabel7.Text = "Consulta estructurada:";
             // 
             // buttonConsultaEstruct
             // 
@@ -468,9 +468,9 @@
             this.metroLabel3.AutoSize = true;
             this.metroLabel3.Location = new System.Drawing.Point(36, 59);
             this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(112, 19);
+            this.metroLabel3.Size = new System.Drawing.Size(115, 19);
             this.metroLabel3.TabIndex = 24;
-            this.metroLabel3.Text = "Consulta vectorial";
+            this.metroLabel3.Text = "Consulta vectorial:";
             // 
             // buttonConsultaVectorial
             // 
@@ -563,6 +563,7 @@
         private MetroFramework.Controls.MetroTextBox textBoxConsultaVectorial;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private MetroFramework.Controls.MetroTextBox textBoxRutaArchivoInvertido;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonRutaArchivoInvertido;
         private MetroFramework.Controls.MetroLabel metroLabel8;

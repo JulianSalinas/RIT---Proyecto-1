@@ -25,45 +25,62 @@ namespace P01_RIT_v2.UI
         }
 
         private void buttonIndexar_Click( object sender, EventArgs e ) {
-            MessageBox.Show("Espere mientras se indexa la coleccion");
+            MessageBox.Show("Por favor espere mientras se indiza la colección y se genera el archivo invertido.");
 
             // Instance (Singleton) exporta su contenido.
             Invertido.Instance.exportarArchivoInvertido(Opciones.Instance.Prefijo + textBoxNombreInvertido.Text);
 
-            
+
             //Console.Write(Invertido.Instance.ToString());
-            MessageBox.Show("Indexación finalizada");
+            MessageBox.Show("El archivo invertido ha sido creado.");
         }
 
         private void buttonColeccion_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoga la carpeta donde está almacenada la colección";
+            folderBrowserDialog.Description = "Escoga la carpeta que contiene la colección de documentos:";
             folderBrowserDialog.ShowDialog();
-            textBoxColeccion.Text = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.RutaColeccion = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.guardarOpciones();
+            
+            if (!folderBrowserDialog.SelectedPath.Equals(""))
+            {
+                textBoxColeccion.Text = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.RutaColeccion = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.guardarOpciones();
+            }
         }
 
         private void buttonInvertido_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoge la carpeta donde almacenará el archivo invertido";
+            folderBrowserDialog.Description = "Escoga la carpeta donde se almacenará el archivo invertido generado:";
             folderBrowserDialog.ShowDialog();
-            textBoxInvertido.Text = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.RutaArchivos = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.guardarOpciones();
+            
+            if (!folderBrowserDialog.SelectedPath.Equals(""))
+            {
+                textBoxInvertido.Text = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.RutaArchivos = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.guardarOpciones();
+            }
         }
 
         private void buttonInvertidoConsultas_Click( object sender, EventArgs e ) {
-            folderBrowserDialog.Description = "Escoge la carpeta donde almacenarán los resultados de las consultas";
+            folderBrowserDialog.Description = "Escoga la carpeta donde se almacenarán los resultados de las consultas:";
             folderBrowserDialog.ShowDialog();
-            textBoxInvertidoConsultas.Text = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath + "\\";
-            Opciones.Instance.guardarOpciones();
+            
+            if (!folderBrowserDialog.SelectedPath.Equals(""))
+            {
+                textBoxInvertidoConsultas.Text = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath + "\\";
+                Opciones.Instance.guardarOpciones();
+            }
+
         }
 
         private void buttonRutaArchivoInvertido_Click( object sender, EventArgs e ) {
             try {
-                if ( openFileDialog.FileName != "" || openFileDialog.FileName != null ) {
-                    openFileDialog.Title = "Escoga el archivo XML con los detalles del archivo invertido";
-                    openFileDialog.ShowDialog();
+                openFileDialog.Title = "Escoga el archivo XML con los detalles del archivo invertido";
+                openFileDialog.Filter = "XML File|*.xml";
+                openFileDialog.FileName = "";
+                openFileDialog.ShowDialog();
+
+                if (!openFileDialog.FileName.Equals(""))
+                {
                     textBoxRutaArchivoInvertido.Text = openFileDialog.FileName;
                     Invertido.Instance = Invertido.importarArchivoInvertido(openFileDialog.SafeFileName);
                 }
@@ -78,14 +95,21 @@ namespace P01_RIT_v2.UI
             {
                 if (textBoxConsultaVectorial.Equals(""))
                 {
-                    throw new Exception("No puede realizar una consulta sin términos.");
+                    throw new Exception("No puede realizar una consulta sin especificar términos de búsqueda.");
+                }
+                if (textBoxRutaArchivoInvertido.Equals(""))
+                {
+                    throw new Exception("Necesita cargar un archivo invertido para realizar una consulta vectorial.");
                 }
                 else
                 {
                     BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, Opciones.Instance.RutaColeccion, textBoxConsultaVectorial.Text);
-                    string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Vect " + nuevaBusqueda.FechaHoraBusqueda.ToString("dd-MM-yyyy HH-mm-ss") + ".xml";
-                    nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
+
+                    string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                        " Busqueda Vectorial " + nuevaBusqueda.FechaHoraBusquedaVectorial.ToString("dd-MM-yyyy HH-mm-ss");
+
+                    nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
+                    nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
                 }
             }
             catch (Exception ex)
@@ -100,37 +124,35 @@ namespace P01_RIT_v2.UI
             {
                 if (textBoxConsultaEstruct.Equals(""))
                 {
-                    throw new Exception("No puede realizar una consulta sin términos.");
+                    throw new Exception("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
                 }
                 else
                 {
                     BusquedaVectorial busquedaVectorial = null;
-                    // Solicita el archivo de consulta vectorial que desea utilizar.
-                    try
-                    {
-                        if (openFileDialog.FileName != "" || openFileDialog.FileName != null)
-                        {
-                            openFileDialog.Title = "Escoga el archivo XML con los detalles de la consulta vectorial";
-                            openFileDialog.ShowDialog();
 
-                            busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
-                        }
-                    }
-                    catch (Exception ex)
+                    // Solicita el archivo de consulta vectorial que desea utilizar.
+                    openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
+                    openFileDialog.Filter = "XML File|*.xml";
+                    openFileDialog.ShowDialog();
+
+                    if (openFileDialog.FileName.Equals(""))
                     {
-                        MessageBox.Show(ex.Message);
+                        throw new Exception("No puede realizar una consulta estructurada sin abrir un archivo de consulta vectorial.");
                     }
+
+                    busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
 
                     BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
+                    string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                        " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
 
-
-                    string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Estruct " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss") + ".xml";
-                    nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
+                    nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
+                    nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 MessageBox.Show(ex.Message);
             }
         }
