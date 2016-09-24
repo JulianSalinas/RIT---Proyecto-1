@@ -84,7 +84,7 @@ namespace P01_RIT_v2.UI
                 {
                     BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, Opciones.Instance.RutaColeccion, textBoxConsultaVectorial.Text);
                     string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Vect " + nuevaBusqueda.FechaHoraBusqueda.ToString("dd-MM-yyyy hh-mm-ss tt") + ".xml";
+                        " Busqueda Vect " + nuevaBusqueda.FechaHoraBusqueda.ToString("dd-MM-yyyy HH-mm-ss") + ".xml";
                     nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
                 }
             }
@@ -125,7 +125,7 @@ namespace P01_RIT_v2.UI
 
 
                     string rutaAchivoXmlGenerado = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Estruct " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy hh-mm-ss tt") + ".xml";
+                        " Busqueda Estruct " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss") + ".xml";
                     nuevaBusqueda.exportarComoXml(rutaAchivoXmlGenerado, true);
                 }
             }
