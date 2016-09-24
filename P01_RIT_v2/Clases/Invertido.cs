@@ -274,11 +274,14 @@ namespace P01_RIT_v2.Clases
             {
                 List<Posting> postingsTermino = new List<Posting>();
 
-                for (int posicionBusqueda = entradaTermino.Inicio;
-                        posicionBusqueda < entradaTermino.Inicio + entradaTermino.Ni;
+                // Se obtiene el índice de inicio y ni de los postings del término para acceder directamente a los postings.
+                int inicioPostingsTermino= entradaTermino.Inicio;       // Indice inicial = Inicio
+                int finPostingsTermino = entradaTermino.Inicio + entradaTermino.Ni;     // Final de postings del término = Inicio + Ni
+
+                for (int posicionBusqueda = inicioPostingsTermino; posicionBusqueda < finPostingsTermino;
                         posicionBusqueda++)
                 {
-                    postingsTermino.Add(Postings.ElementAt(posicionBusqueda));
+                    postingsTermino.Add(Postings[posicionBusqueda]);
                 }
                 return postingsTermino;
             }
@@ -291,7 +294,7 @@ namespace P01_RIT_v2.Clases
         /// Término a buscar dentro del Archivo Invertido.
         /// </param>
         /// <returns>
-        /// Lista de Postings del término. Si el término no pudo ser encontrado, se retorna Null.
+        /// Lista de Postings del término. Si el término no pudo ser encontrado, se retorna una lista vacía.
         /// </returns>
         public List<Posting> obtenerPostingsTerminoExacto(string terminoBusqueda)
         {
@@ -301,9 +304,12 @@ namespace P01_RIT_v2.Clases
             }
 
             Termino terminoEncontrado = obtenerTerminoExacto(terminoBusqueda);
+            if (terminoEncontrado == null)
+            {
+                return new List<Posting>();
+            }
             return obtenerPostingsTerminoExacto(terminoEncontrado);
         }
-
 
         /// <summary>
         /// Obtiene todos los postings asociados a un documento.

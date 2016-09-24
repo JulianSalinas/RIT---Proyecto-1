@@ -1,10 +1,11 @@
+*.pdb
+*.exe
 P01_RIT_v2/P01_RIT_v2.sln
 P01_RIT_v2/.vs/P01_RIT_v2/v14/.suo
 P01_RIT_v2/bin/Debug/P01_RIT_v2.exe
-*.pdb
-*.exe
 P01_RIT_v2/obj/Debug/P01_RIT_v2.pdb
 P01_RIT_v2/.vs/P01_RIT_v2/v14/.suo
 P01_RIT_v2/.vs/P01_RIT_v2/v14/.suo
 P01_RIT_v2/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-*.txt
+P01_RIT_v2/obj/Debug/P01_RIT_v2.pdb
+P01_RIT_v2/Archivos/PRE-1  Archivo Invertido.xml

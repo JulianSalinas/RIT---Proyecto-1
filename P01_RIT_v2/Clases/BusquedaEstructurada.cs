@@ -95,7 +95,7 @@ namespace P01_RIT_v2.Clases
         {
             
             RutaBusquedaVectorial = busquedaVectorial.RutaBusquedaVectorial;
-            FechaHoraBusquedaVectorial = busquedaVectorial.FechaHoraBusqueda;
+            FechaHoraBusquedaVectorial = busquedaVectorial.FechaHoraBusquedaVectorial;
             RutaColeccionDocumentos = busquedaVectorial.RutaDocumentos;
             ConsultaVectorial = busquedaVectorial.Consulta;
 
@@ -301,11 +301,16 @@ namespace P01_RIT_v2.Clases
         /// Utilizar una ruta relativa implica que el archivo será guardado en la carpeta por defecto (...\\Archivos) y no se debe agregar la extensión (*.xml).
         /// Utilizar una ruta absoluta debe incluir la extensión del archivo.
         /// </param>
-        public void generarHTML()
+        public void generarHTML(string rutaArchivo, bool usarRutaAbsoluta = false)
         {
+            if (!usarRutaAbsoluta)
+            {
+                rutaArchivo = Opciones.Instance.RutaConsultas + rutaArchivo;
+            }
+
             // Información básica del HTML.
-            string strFechaHoraBusquedaEstruct = FechaHoraBusquedaEstructurada.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
-            string strFechaHoraBusquedaVect = FechaHoraBusquedaVectorial.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
+            string strFechaHoraBusquedaEstruct = FechaHoraBusquedaEstructurada.ToString("dd/MM/yyyy HH:mm:ss.fff");
+            string strFechaHoraBusquedaVect = FechaHoraBusquedaVectorial.ToString("dd/MM/yyyy HH:mm:ss.fff");
             string strRutaDocumentos = RutaColeccionDocumentos;
             string strConsulaVectorial = ConsultaVectorial;
 
@@ -320,11 +325,12 @@ namespace P01_RIT_v2.Clases
             // Obtiene la información de los primeros 30 elementos del escalafón.
             List<string[]> top30 = new List<string[]>();
 
+            // Se utiliza la longitud del escalafón filtrado si tiene menos de 30 documentos.
             int longitudEscalafon = (RankingDocumentos.Count < 30) ? RankingDocumentos.Count : 30;
 
-            for (int pos = 0; pos < longitudEscalafon; pos++)
+            for (int posicion = 0; posicion < longitudEscalafon; posicion++)
             {
-                RankingDocumento rankingObtenido = RankingDocumentos[pos];
+                RankingDocumento rankingObtenido = RankingDocumentos[posicion];
                 string strPosicion = rankingObtenido.Posicion.ToString();
                 string strSimilitud = rankingObtenido.Similitud.ToString("F3");
                 string strDocId = rankingObtenido.IdDocumento.ToString();
@@ -348,13 +354,13 @@ namespace P01_RIT_v2.Clases
             html += "Texto de la consulta: \t" + strConsulaVectorial + "\n";
             html += "Listas de cláusulas de la consulta: \n";
             foreach (string[] clausula in clausulas) {
-                html += "Bilogical entity: " + clausula[0] + "\n";
-                html += "Character Name: " + clausula[1] + "\n";
-                html += "Character Value: " + clausula[2] + "\n";
+                html += "Biological Entity (name): " + clausula[0] + "\n";
+                html += "Character (name): " + clausula[1] + "\n";
+                html += "Character (value): " + clausula[2] + "\n";
             }
             foreach (string[] doc in top30) { 
-                html += "\nID del documento: " + doc[2] + "\n";
-                html += "Posicion obtenida: " + doc[0] + "\n";
+                html += "\nId del documento: " + doc[2] + "\n";
+                html += "Posición obtenida: " + doc[0] + "\n";
                 html += "Similitud: " + doc[1] + "\n";
                 html += "Taxon Name: " + doc[3] + "\n";
                 html += "Taxon Rank: " + doc[4] + "\n";
@@ -362,19 +368,22 @@ namespace P01_RIT_v2.Clases
             }
             html += "</pre>";
 
+            StreamWriter file = null;
             try {
-                string fullpath =
-                    Opciones.Instance.RutaConsultas +
-                    Opciones.Instance.Prefijo + " Busqueda Estruc " + DateTime.Now.ToString() +".html";
-                StreamWriter file = new StreamWriter(fullpath);
+                file = new StreamWriter(rutaArchivo);
                 file.WriteLine(html);
-                file.Close();
             }
             catch ( Exception e ) {
+                Console.WriteLine(e.StackTrace);
                 throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
             }
-
-
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
+            }
         }
     }
 
