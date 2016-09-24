@@ -62,7 +62,7 @@ namespace P01_RIT_v2.Clases
         /// Fecha y hora de la consulta efectuada.
         /// </summary>
         private DateTime fechaHoraBusqueda;
-        public DateTime FechaHoraBusqueda
+        public DateTime FechaHoraBusquedaVectorial
         {
             get { return fechaHoraBusqueda; }
             set { fechaHoraBusqueda = value;}
@@ -94,8 +94,9 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         public BusquedaVectorial()
         {
-            rutaArchivoInvertido = "";
             archivoInvertido = null;
+            rutaBusquedaVectorial = "";
+            rutaArchivoInvertido = "";
             rutaDocumentos = "";
             fechaHoraBusqueda = System.DateTime.Now;
             consulta = "";
@@ -203,9 +204,10 @@ namespace P01_RIT_v2.Clases
         /// <param name="normalConsulta">Normal de la consulta.</param>
         private void normalizarRankingDocumentos(double normalConsulta)
         {
-            foreach(RankingDocumento rankingDocumento in rankingDocumentos)
+            Console.WriteLine("Normalizando resultandos...");
+            foreach (RankingDocumento rankingDocumento in rankingDocumentos)
             {
-                int idDocumento = rankingDocumento.IdDocumento;
+                 int idDocumento = rankingDocumento.IdDocumento;
                 double normalDocumento = calcularNormalDocumento(idDocumento);
 
                 // Si alguna de las normales tiene valor cero, la similitud será cero.
@@ -230,6 +232,9 @@ namespace P01_RIT_v2.Clases
             // Se recorre cadá término de la consulta para obtener sus postings asociados.
             foreach(TerminoConsultaVectorial terminoConsulta in terminosConsulta)
             {
+                // Salida en consola (opcional)
+                Console.WriteLine("Obteniendo postings del término " + terminoConsulta.Termino + " con peso " + terminoConsulta.Peso.ToString()); 
+
                 List<Posting> postingsTermino = archivoInvertido.obtenerPostingsTerminoExacto(terminoConsulta.Termino);
 
                 // Se recorren los postings del término y se suman las similitudes para cada documento de los postings.
@@ -330,7 +335,6 @@ namespace P01_RIT_v2.Clases
             Dictionary<string, TerminoConsultaVectorial> terminosProcesados = new Dictionary<string, TerminoConsultaVectorial>();
             foreach(string matchConsulta in listaMatchesTerminos)
             {
-                Console.WriteLine("Procesando match: " + matchConsulta);
                 procesarTermino(matchConsulta, terminosProcesados);
             }
 
@@ -426,6 +430,11 @@ namespace P01_RIT_v2.Clases
         /// </param>
         public void generarHTML(string rutaArchivo, bool usarRutaAbsoluta = false)
         {
+            if (!usarRutaAbsoluta)
+            {
+                rutaArchivo = Opciones.Instance.RutaConsultas + rutaArchivo;
+            }
+
             // Información básica del HTML.
             string strFechaHoraBusqueda = fechaHoraBusqueda.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
             string strRutaDocumentos = rutaDocumentos;
@@ -467,16 +476,21 @@ namespace P01_RIT_v2.Clases
             }
             html += "</pre>";
 
+            StreamWriter file = null;
+
             try {
-                string fullpath =
-                    Opciones.Instance.RutaConsultas +
-                    Opciones.Instance.Prefijo + " Busqueda Vect " + DateTime.Now.ToString() + ".html";
-                StreamWriter file = new StreamWriter(fullpath);
+                file = new StreamWriter(rutaArchivo);
                 file.WriteLine(html);
-                file.Close();
             }
             catch ( Exception e ) {
                 throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
+            }
+            finally
+            {
+                if (file != null)
+                {
+                    file.Close();
+                }
             }
         }
     }

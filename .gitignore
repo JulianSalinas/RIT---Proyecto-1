@@ -8,3 +8,6 @@ P01_RIT_v2/.vs/P01_RIT_v2/v14/.suo
 P01_RIT_v2/.vs/P01_RIT_v2/v14/.suo
 P01_RIT_v2/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 *.txt
+*.exe
+P01_RIT_v2/obj/Debug/P01_RIT_v2.pdb
+*.pdb
