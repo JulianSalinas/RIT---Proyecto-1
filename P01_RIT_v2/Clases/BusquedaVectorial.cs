@@ -351,6 +351,7 @@ namespace P01_RIT_v2.Clases
         {
             // Procesar consulta en bruto y calcular normal.
             List<TerminoConsultaVectorial> terminosConsulta = procesarConsulta();
+           
             double normalConsulta = calcularNormalConsulta(terminosConsulta);
 
             // Se crea el nuevo escalafón y se le asocia a un diccionario para optimizar búsquedas no secuenciales.
@@ -451,8 +452,32 @@ namespace P01_RIT_v2.Clases
             }
 
 
-            Console.WriteLine("Aquí se inserta el resto de la lógica para generar el HTML.");
-            // Implementar exportación a HTML.
+            // Generar el html
+            string html = "<head><meta charset =\"UTF-8\"></head><h1>Consulta vectorial</h1><pre>";
+            html += "Fecha de la consulta vectorial: \t" + strFechaHoraBusqueda + "\n";
+            html += "Ruta de la coleccion consultada: \t" + strRutaDocumentos + "\n";
+            html += "Texto de la consulta: \t" + strTextoConsulta + "\n";
+            foreach ( string[] doc in top30 ) {
+                html += "\nID del documento: " + doc[2] + "\n";
+                html += "Posicion obtenida: " + doc[0] + "\n";
+                html += "Similitud: " + doc[1] + "\n";
+                html += "Taxon Name: " + doc[3] + "\n";
+                html += "Taxon Rank: " + doc[4] + "\n";
+                html += "Taxon Description:\n" + doc[5] + "\n";
+            }
+            html += "</pre>";
+
+            try {
+                string fullpath =
+                    Opciones.Instance.RutaConsultas +
+                    Opciones.Instance.Prefijo + " Busqueda Vect " + DateTime.Now.ToString() + ".html";
+                StreamWriter file = new StreamWriter(fullpath);
+                file.WriteLine(html);
+                file.Close();
+            }
+            catch ( Exception e ) {
+                throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
+            }
         }
     }
 

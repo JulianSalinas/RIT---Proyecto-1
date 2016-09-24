@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
@@ -300,7 +301,7 @@ namespace P01_RIT_v2.Clases
         /// Utilizar una ruta relativa implica que el archivo será guardado en la carpeta por defecto (...\\Archivos) y no se debe agregar la extensión (*.xml).
         /// Utilizar una ruta absoluta debe incluir la extensión del archivo.
         /// </param>
-        public void generarHTML(string rutaArchivo, bool usarRutaAbsoluta = false)
+        public void generarHTML()
         {
             // Información básica del HTML.
             string strFechaHoraBusquedaEstruct = FechaHoraBusquedaEstructurada.ToString("dd/MM/yyyy hh:mm:ss.fff tt");
@@ -339,8 +340,41 @@ namespace P01_RIT_v2.Clases
                 top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription });
             }
 
-            // Implementar resto de lógica aquí.
-            Console.WriteLine("Aquí se inserta el resto de la lógica para generar el HTML.");
+            // Generar el html
+            string html = "<head><meta charset =\"UTF-8\"></head><h1>Consulta estructurada</h1><pre>";
+            html += "Fecha de la consulta estructurada: \t" + strFechaHoraBusquedaEstruct + "\n";
+            html += "Fecha de la consulta vectorial: \t" + strFechaHoraBusquedaVect + "\n";
+            html += "Ruta de la coleccion consultada: \t" + strRutaDocumentos + "\n";
+            html += "Texto de la consulta: \t" + strConsulaVectorial + "\n";
+            html += "Listas de cláusulas de la consulta: \n";
+            foreach (string[] clausula in clausulas) {
+                html += "Bilogical entity: " + clausula[0] + "\n";
+                html += "Character Name: " + clausula[1] + "\n";
+                html += "Character Value: " + clausula[2] + "\n";
+            }
+            foreach (string[] doc in top30) { 
+                html += "\nID del documento: " + doc[2] + "\n";
+                html += "Posicion obtenida: " + doc[0] + "\n";
+                html += "Similitud: " + doc[1] + "\n";
+                html += "Taxon Name: " + doc[3] + "\n";
+                html += "Taxon Rank: " + doc[4] + "\n";
+                html += "Taxon Description:\n" + doc[5] + "\n";
+            }
+            html += "</pre>";
+
+            try {
+                string fullpath =
+                    Opciones.Instance.RutaConsultas +
+                    Opciones.Instance.Prefijo + " Busqueda Estruc " + DateTime.Now.ToString() +".html";
+                StreamWriter file = new StreamWriter(fullpath);
+                file.WriteLine(html);
+                file.Close();
+            }
+            catch ( Exception e ) {
+                throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
+            }
+
+
         }
     }
 
