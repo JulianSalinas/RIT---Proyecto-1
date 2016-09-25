@@ -446,7 +446,7 @@ namespace P01_RIT_v2.Clases
             {
                 RankingDocumento rankingObtenido = rankingDocumentos[pos];
                 string strPosicion = rankingObtenido.Posicion.ToString();
-                string strSimilitud = rankingObtenido.Similitud.ToString("F3");
+                string strSimilitud = rankingObtenido.Similitud.ToString();
                 string strDocId = rankingObtenido.IdDocumento.ToString();
                 string strTaxonName = rankingObtenido.TaxonNameDocumento;
                 string strTaxonRank = rankingObtenido.TaxonRank;
@@ -455,9 +455,10 @@ namespace P01_RIT_v2.Clases
                 documento.cargarDocumento();
 
                 string strTaxonDescription = documento.getTaxonDescription(true);
+                string strRutaDocumento = documento.Ruta;
 
                 // Formato de cada entrada del escalafón para las primeras 30 posiciones.
-                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription });
+                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription,strRutaDocumento });
             }
 
 
@@ -473,6 +474,7 @@ namespace P01_RIT_v2.Clases
                 html += "Taxon Name: " + doc[3] + "\n";
                 html += "Taxon Rank: " + doc[4] + "\n";
                 html += "Taxon Description:\n" + doc[5] + "\n";
+                html += "<a href = \"" + doc[6] + "\">Ubicación: " + doc[6] + "</a>\n";
             }
             html += "</pre>";
 

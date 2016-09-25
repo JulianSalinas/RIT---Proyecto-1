@@ -57,6 +57,7 @@
             this.textboxhtml = new MetroFramework.Controls.MetroTextBox();
             this.metroTextButton1 = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -527,6 +528,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.metroButton1);
             this.tabPage3.Controls.Add(this.metroTextButton1);
             this.tabPage3.Controls.Add(this.textboxhtml);
             this.tabPage3.Controls.Add(this.webBrowser1);
@@ -552,7 +554,7 @@
             this.textboxhtml.CustomButton.UseSelectable = true;
             this.textboxhtml.CustomButton.Visible = false;
             this.textboxhtml.Lines = new string[0];
-            this.textboxhtml.Location = new System.Drawing.Point(3, 3);
+            this.textboxhtml.Location = new System.Drawing.Point(73, 3);
             this.textboxhtml.MaxLength = 32767;
             this.textboxhtml.Name = "textboxhtml";
             this.textboxhtml.PasswordChar = '\0';
@@ -560,7 +562,7 @@
             this.textboxhtml.SelectedText = "";
             this.textboxhtml.SelectionLength = 0;
             this.textboxhtml.SelectionStart = 0;
-            this.textboxhtml.Size = new System.Drawing.Size(658, 23);
+            this.textboxhtml.Size = new System.Drawing.Size(588, 23);
             this.textboxhtml.TabIndex = 36;
             this.textboxhtml.UseSelectable = true;
             this.textboxhtml.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -587,6 +589,16 @@
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.Size = new System.Drawing.Size(715, 394);
             this.webBrowser1.TabIndex = 39;
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Location = new System.Drawing.Point(3, 3);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(64, 23);
+            this.metroButton1.TabIndex = 40;
+            this.metroButton1.Text = "Atrás";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
             // MainWindow
             // 
@@ -641,5 +653,6 @@
         private MetroFramework.Controls.MetroTextBox.MetroTextButton metroTextButton1;
         private MetroFramework.Controls.MetroTextBox textboxhtml;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private MetroFramework.Controls.MetroButton metroButton1;
     }
 }

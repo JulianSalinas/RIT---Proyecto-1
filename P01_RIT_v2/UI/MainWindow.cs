@@ -187,5 +187,9 @@ namespace P01_RIT_v2.UI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void metroButton1_Click( object sender, EventArgs e ) {
+            webBrowser1.GoBack();
+        }
     }
 }
