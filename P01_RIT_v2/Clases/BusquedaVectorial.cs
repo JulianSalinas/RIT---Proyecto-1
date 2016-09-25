@@ -455,10 +455,10 @@ namespace P01_RIT_v2.Clases
                 documento.cargarDocumento();
 
                 string strTaxonDescription = documento.getTaxonDescription(true);
-                string strRutaDocumento = documento.Ruta;
+                string strRutaDocumento = documento.RutaArchivo;
 
                 // Formato de cada entrada del escalafón para las primeras 30 posiciones.
-                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription,strRutaDocumento });
+                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription, strRutaDocumento });
             }
 
 
@@ -467,7 +467,8 @@ namespace P01_RIT_v2.Clases
             html += "Fecha de la consulta vectorial: \t" + strFechaHoraBusqueda + "\n";
             html += "Ruta de la coleccion consultada: \t" + strRutaDocumentos + "\n";
             html += "Texto de la consulta: \t" + strTextoConsulta + "\n";
-            foreach ( string[] doc in top30 ) {
+            foreach (string[] doc in top30)
+            {
                 html += "\nID del documento: " + doc[2] + "\n";
                 html += "Posicion obtenida: " + doc[0] + "\n";
                 html += "Similitud: " + doc[1] + "\n";
@@ -483,11 +484,13 @@ namespace P01_RIT_v2.Clases
 
             StreamWriter file = null;
 
-            try {
+            try
+            {
                 file = new StreamWriter(rutaArchivo);
                 file.WriteLine(html);
             }
-            catch ( Exception e ) {
+            catch (Exception e)
+            {
                 throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
             }
             finally

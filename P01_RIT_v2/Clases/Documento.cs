@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace P01_RIT_v2.Clases
 {
@@ -22,11 +24,11 @@ namespace P01_RIT_v2.Clases
         /// <summary>
         /// Ruta del archivo asociado al documento.
         /// </summary>
-        private string ruta;
-        public string Ruta
+        private string rutaArchivo;
+        public string RutaArchivo
         {
-            get { return ruta; }
-            set { ruta = value; }
+            get { return rutaArchivo; }
+            set { rutaArchivo = value; }
         }
 
         [NonSerialized]
@@ -40,7 +42,7 @@ namespace P01_RIT_v2.Clases
         /// <summary>
         /// Archivo XML del documento cargado en memoria. Null si el documento no está cargado en memoria.
         /// </summary>
-        private XmlDocument XmlDocument;
+        private XDocument archivo;
 
         /// <summary>
         /// Constructor por defecto. Necesario para serializar y deserializar clase.
@@ -48,18 +50,18 @@ namespace P01_RIT_v2.Clases
         public Documento()
         {
             Id = 0;
-            Ruta = "";
+            RutaArchivo = "";
             terminos = null;
-            XmlDocument = null;
+            archivo = null;
             terminos = new Dictionary<string, int>();
         }
 
         public Documento(int id, string ruta)
         {
-            this.Id = id;
-            this.Ruta = ruta;
+            Id = id;
+            RutaArchivo = ruta;
             terminos = new Dictionary<string, int>();
-            XmlDocument = null;
+            archivo = null;
         }
 
         /// <summary>
@@ -94,9 +96,61 @@ namespace P01_RIT_v2.Clases
         /// </summary>
         public void cargarDocumento()
         {
-            XmlDocument = new XmlDocument();
-            XmlDocument.Load(Ruta);
+            try
+            {
+                archivo = XDocument.Load(rutaArchivo);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("No se pudo abrir el documento.");
+            }
         }
+
+                /// <summary>
+        /// Obtiene el valor del atributo "taxon_name" del documento.
+        /// </summary>
+        /// <returns></returns>
+        public string getTaxonName()
+        {
+            // Si el documento XML no está abierto, se carga.
+            if (archivo == null)
+            {
+                cargarDocumento();
+            }
+            try
+            {
+                XNamespace ns = archivo.Root.Name.Namespace;
+                return archivo.Descendants(ns + "taxon_identification").Select(x => x.Attribute("taxon_name").Value).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al leer name de taxon_identification");
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el valor del atributo "rank" del documento.
+        /// </summary>
+        /// <returns></returns>
+        public string getTaxonRank()
+        {
+            // Si el documento XML no está abierto, se carga.
+            if (archivo == null)
+            {
+                cargarDocumento();
+            }
+            try
+            {
+                XNamespace ns = archivo.Root.Name.Namespace;
+                return archivo.Root.Descendants(ns + "taxon_identification").Select(x => x.Attribute("rank").Value).FirstOrDefault();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al leer rank de taxon_identification");
+            }
+        }
+
 
         /// <summary>
         /// Obtiene el valor del atributo "taxon_description" del documento.
@@ -105,163 +159,64 @@ namespace P01_RIT_v2.Clases
         /// <returns></returns>
         public string getTaxonDescription(bool truncar = false)
         {
-            if (XmlDocument == null)
+            if (archivo == null)
             {
                 cargarDocumento();
             }
             try
             {
-                XmlElement treatment = XmlDocument.DocumentElement;
-                XmlNode node = treatment.GetElementsByTagName("description")[0];
-                string value = node.Attributes["taxon_description"].Value;
+                XNamespace ns = archivo.Root.Name.Namespace;
+                string taxonDescription = 
+                    archivo.Root.Descendants(ns + "description").Select(x => x.Attribute("taxon_description").Value).FirstOrDefault();
 
                 if (truncar)
                 {
                     // Comprime los espacios múltpiles y reemplaza los saltos de línea por espacios.
-                    Regex.Replace(value, @"(\s{2,})|(\r\n|\r|\n)", " ");
-                    if (value.Length > 200)
+                    Regex.Replace(taxonDescription, @"(\s{2,})|(\r\n|\r|\n)", " ");
+                    if (taxonDescription.Length > 200)
                     {
-                        value = value.Substring(0, 200);
+                        taxonDescription = taxonDescription.Substring(0, 200);
                     }
                 }
-                return value;
+                return taxonDescription;
             }
-            catch (NullReferenceException e)
+            catch (Exception e)
             {
-                return null;
+                throw new Exception("Error al leer taxon_description");
             }
         }
 
-        /// <summary>
-        /// Obtiene el valor del atributo "taxon_name" del documento.
-        /// </summary>
-        /// <returns></returns>
-        public string getTaxonName()
+
+        public bool encontrarDato(string biologicalEntityName, string characterName = "", string characterValue = "")
         {
-            // Si el documento XML no está abierto, se carga.
-            if (XmlDocument == null)
-            {
-                cargarDocumento();
-            }
             try
             {
-                XmlElement treatment = XmlDocument.DocumentElement;
-                XmlNode node = treatment.GetElementsByTagName("taxon_identification")[0];
-                return node.Attributes["taxon_name"].Value;
-            }
-            catch (NullReferenceException e)
-            {
-                return null;
-            }
-        }
+                XmlNamespaceManager nsm = new XmlNamespaceManager(new NameTable());
+                nsm.AddNamespace("ns", archivo.Root.Name.NamespaceName);
 
-        /// <summary>
-        /// Obtiene el valor del atributo "rank" del documento.
-        /// </summary>
-        /// <returns></returns>
-        public string getRank()
-        {
-            // Si el documento XML no está abierto, se carga.
-            if (XmlDocument == null)
-            {
-                cargarDocumento();
-            }
-
-            try
-            {
-                XmlElement treatment = XmlDocument.DocumentElement;
-                XmlNode node = treatment.GetElementsByTagName("taxon_identification")[0];
-                return node.Attributes["rank"].Value;
-            }
-            catch (NullReferenceException e)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Obtiene una lista con todos los valores del atributo "name" para todos los nodos "biological_entity" del documento.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> getBiologicalEntitiesNames()
-        {
-            // Si el documento XML no está abierto, se carga.
-            if (XmlDocument == null)
-            {
-                cargarDocumento();
-            }
-
-            XmlElement treatment = XmlDocument.DocumentElement;
-            XmlNodeList nodes = treatment.GetElementsByTagName("biological_entity");
-            List<string> values = new List<string>();
-
-            foreach (XmlNode node in nodes)
-            {
-                try
+                string xpath = "/ns:treatment/ns:description/ns:statement/ns:biological_entity[@name=\'" + biologicalEntityName + "\'";
+                if (!characterName.Equals(""))
                 {
-                    values.Add(node.Attributes["name"].Value);
+                    xpath += "]/ns:character[@name=\'" + characterName + "\'";
                 }
-                catch (NullReferenceException)
+                if (!characterValue.Equals(""))
                 {
-                    continue;
+                    xpath += " and @value='" + characterValue + "\'";
                 }
-            }
-            return values;
-        }
+                xpath += "]";
 
-        /// <summary>
-        /// Obtiene una lista con pares de valores para los atributos "name" y "value" de los nodos "character" asociados a un nodo "biological_entity" del documento.
-        /// </summary>
-        /// <param name="biologicalEntityName">Valor del atributo "name" para el "biological_entity" consultado.</param>
-        /// <returns>Lista con pares de valores para los atributos "name" y "value" para cada "character".
-        /// Si el "biological_entity" no existe, se retorna Null.
-        /// Si algún "character" no tiene valores para algún atributo, dicho atributo se devuelve como un string vacío ("").
-        /// </returns>
-        public List<string[]> getBiologicalEntityCharacters(string biologicalEntityName)
-        {
-            // Si el documento XML no está abierto, se carga.
-            if (XmlDocument == null)
-            {
-                cargarDocumento();
-            }
+                IEnumerable<XElement> encontrado = archivo.XPathSelectElements(xpath, nsm);
+                int cuenta = encontrado.Count();
 
-            List<string[]> charactersList = new List<string[]>();
-            XmlElement treatment = XmlDocument.DocumentElement;
-            try
-            {
-                XmlNodeList biologicalEntities = treatment.GetElementsByTagName("biological_entity");
-                foreach (XmlNode biological_entity in biologicalEntities)
-                {
-                    if (biological_entity.Attributes["name"].Value.Equals(biologicalEntityName))
-                    {
-                        // Verificar esta expresión XPath para obtener los nodos "character" hijos del nodo "biological_entity".
-                        XmlNodeList characters = biological_entity.ChildNodes;
-
-                        foreach (XmlNode character in characters)
-                        {
-                            string character_name = character.Attributes["name"].Value;
-                            string character_value = character.Attributes["value"].Value;
-                            if (character_name == null)
-                            {
-                                character_name = "";
-                            }
-                            if (character_value == null)
-                            {
-                                character_value = "";
-                            }
-                            charactersList.Add(new string[] { character_name, character_value });
-                        }
-                        return charactersList;
-                    }
-                }
-                return null;
+                return cuenta > 0;
             }
-            catch (NullReferenceException e)
+            catch (Exception e)
             {
-                return null;
+                System.Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                return false;
             }
         }
-
+       
 
         /// <summary>
         /// Obtiene una lista de todos los términos registrados dentro del documento.
@@ -290,7 +245,7 @@ namespace P01_RIT_v2.Clases
 
             // RegEx para eliminar los signos de puntuacion
 
-            string noPuntuacionesPattern = @"[^a-zA-Z0-9ñ ]|(\d)?(\d|,)*\.?\d";      
+            string noPuntuacionesPattern = @"[^a-zA-Z0-9ñÑ ]|(\d)?(\d|,)*\.?\d";      
             Regex noPuntuacionesRegEx = new Regex(noPuntuacionesPattern, RegexOptions.Compiled);
 
             // Agrega los terminos del TaxonName y el Rank
@@ -314,7 +269,7 @@ namespace P01_RIT_v2.Clases
             {
                 terminos.Add(nuevoTaxonName, 1);
             }
-            string nuevoRank = getRank().ToLower();
+            string nuevoRank = getTaxonRank().ToLower();
 
             if (terminos.ContainsKey(nuevoRank))
             {
@@ -369,7 +324,7 @@ namespace P01_RIT_v2.Clases
         {
             string termsString = "";
             termsString += "IDDocumento: " + Id.ToString() + "\n";
-            termsString += "Ruta: " + Ruta + "\n";
+            termsString += "Ruta: " + RutaArchivo + "\n";
             termsString += "Términos: \n";
 
             string[] terminos = this.terminos.Keys.ToArray();

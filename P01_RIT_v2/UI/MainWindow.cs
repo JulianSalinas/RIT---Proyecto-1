@@ -105,6 +105,8 @@ namespace P01_RIT_v2.UI
                 {
                     BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, Opciones.Instance.RutaColeccion, textBoxConsultaVectorial.Text);
 
+                    MessageBox.Show("La consulta vectorial ha sido realizada.");
+
                     string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
                         " Busqueda Vectorial " + nuevaBusqueda.FechaHoraBusquedaVectorial.ToString("dd-MM-yyyy HH-mm-ss");
 
@@ -122,42 +124,42 @@ namespace P01_RIT_v2.UI
         private void buttonConsultaEstruct_Click( object sender, EventArgs e ) {
             BusquedaVectorial busquedaVectorial = null;
 
+            if (textBoxConsultaEstruct.Equals(""))
+            {
+                MessageBox.Show("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
+                return;
+            }
+
+            // Solicita el archivo de consulta vectorial que desea utilizar.
+            openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
+            openFileDialog.Filter = "XML File|*.xml";
+            openFileDialog.FileName = "";
+            openFileDialog.InitialDirectory = textBoxRutaResultadosConsulta.Text;
+            openFileDialog.ShowDialog();
+
             if (openFileDialog.FileName.Equals(""))
             {
-                MessageBox.Show("No puede realizar una consulta estructurada sin abrir un archivo de consulta vectorial.");
+                MessageBox.Show("No puede realizar una consulta estructurada sin cargar una consulta vectorial.");
+                return;
             }
-            else
+
+            try
             {
-                // Solicita el archivo de consulta vectorial que desea utilizar.
-                openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
-                openFileDialog.Filter = "XML File|*.xml";
-                openFileDialog.FileName = "";
-                openFileDialog.InitialDirectory = textBoxRutaResultadosConsulta.Text;
-                openFileDialog.ShowDialog();
+                busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
 
-                if (textBoxConsultaEstruct.Equals(""))
-                {
-                    MessageBox.Show("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
-                }
-                else
-                {
-                    try
-                    {
-                        busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
+                BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
+                string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                    " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
 
-                        BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
-                        string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                            " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
+                MessageBox.Show("La consulta estructurada ha sido finalizada.");
 
-                        nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
-                        nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.StackTrace);
-                        MessageBox.Show(ex.Message);
-                    }
-                }
+                nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
+                nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                MessageBox.Show(ex.Message);
             }
         }
         

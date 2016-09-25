@@ -120,55 +120,7 @@ namespace P01_RIT_v2.Clases
         {
             Documento documento = new Documento(rankingDocumento.IdDocumento, rankingDocumento.RutaDocumento);
             documento.cargarDocumento();
-
-            // Obtiene todos los valores del atributo "name" para las etiquetas "biological_entity"
-            List<string> bioEntitiesDocumento = documento.getBiologicalEntitiesNames();
-            foreach (string bioEntityNameDoc in bioEntitiesDocumento)
-            {
-                // Para cada término de la cláusua se reemplazan acentos y se utilizarán letras minúsculas.
-                string bioEntityName = Stopwords.Instance.reemplazarAcentos(bioEntityNameDoc).ToLower();
-
-                // Coincide el "name" de "biological_entity".
-                if (bioEntityName.Equals(clausula.BiologicalEntity))
-                {
-                    // La cláusula sólo tiene un término.
-                    if (clausula.CharacterName.Equals(""))
-                    {
-                        return true;
-                    }
-
-                    // La cláusula tiene más de un término.
-                    else
-                    {
-                        List<string[]> charactersBioEntity = documento.getBiologicalEntityCharacters(bioEntityNameDoc);
-                        foreach (string[] characterBioEntity in charactersBioEntity)
-                        {
-                            string characterName = Stopwords.Instance.reemplazarAcentos(characterBioEntity[0]).ToLower();
-
-                            // Hay coincidencia en el atributo "name" de "character".
-                            if (characterName.Equals(clausula.CharacterName))
-                            {
-                                // La cláusula tiene tres términos.
-                                if (clausula.CharacterValue.Equals(""))
-                                {
-                                    return true;
-                                }
-                                else
-                                {
-                                    string characterValue = Stopwords.Instance.reemplazarAcentos(characterBioEntity[1]).ToLower();
-
-                                    // La consulta tiene coincidencia en el atributo "value" de "character".
-                                    if (characterValue.Equals(clausula.CharacterValue))
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return false;
+            return documento.encontrarDato(clausula.BiologicalEntity, clausula.CharacterName, clausula.CharacterValue);
         }
 
         /// <summary>
@@ -181,7 +133,7 @@ namespace P01_RIT_v2.Clases
             string[] terminosClausula = clausulaEncontrada.Split(' ');
             if (terminosClausula.Length < 1)
             {
-                throw new Exception("La cláusula recibir tiene un formato inválido y no puede ser procesada.");
+                throw new Exception("La cláusula recibida tiene un formato inválido y no puede ser procesada.");
             }
             else
             {
@@ -340,7 +292,7 @@ namespace P01_RIT_v2.Clases
                 documento.cargarDocumento();
 
                 string strTaxonDescription = documento.getTaxonDescription(true);
-                string strRutaDocumento = documento.Ruta;
+                string strRutaDocumento = documento.RutaArchivo;
 
                 // Formato de cada entrada del escalafón para las primeras 30 posiciones.
                 top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription, strRutaDocumento });
@@ -357,7 +309,7 @@ namespace P01_RIT_v2.Clases
             {
                 html += "Biological Entity (name): " + clausula[0] + "\n";
                 html += "Character (name): " + clausula[1] + "\n";
-                html += "Character (value): " + clausula[2] + "\n";
+                html += "Character (value): " + clausula[2] + "\n\n";
             }
             foreach (string[] doc in top30)
             {
