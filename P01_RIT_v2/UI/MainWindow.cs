@@ -170,5 +170,22 @@ namespace P01_RIT_v2.UI
         private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
             Opciones.Instance.Prefijo = textBoxPrefijo.Text;
         }
+
+        private void metroTextButton1_Click( object sender, EventArgs e ) {
+            try { 
+                openFileDialog.Title = "Escoga el HTML para abrir";
+                openFileDialog.Filter = "HTML File|*.html";
+                openFileDialog.ShowDialog();
+
+                if ( !openFileDialog.FileName.Equals("") ) {
+                    textboxhtml.Text = openFileDialog.FileName;
+                    webBrowser1.Navigate(openFileDialog.FileName);
+                }
+
+            }
+            catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

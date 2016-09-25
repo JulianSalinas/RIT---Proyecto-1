@@ -14,11 +14,6 @@ namespace P01_RIT_v2.Clases
         [STAThread]
         static void Main()
         {
-            //Para visualizar las rutas en la consola
-            //Console.Write(Opciones.Instance);
-
-            //Opciones.Instance.guardarOpciones();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
