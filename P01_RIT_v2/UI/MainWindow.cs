@@ -21,7 +21,7 @@ namespace P01_RIT_v2.UI
             textBoxPrefijo.Text = Opciones.Instance.Prefijo;
             textBoxColeccion.Text = Opciones.Instance.RutaColeccion;
             textBoxInvertido.Text = Opciones.Instance.RutaArchivos;
-            textBoxInvertidoConsultas.Text = Opciones.Instance.RutaConsultas;
+            textBoxRutaResultadosConsulta.Text = Opciones.Instance.RutaConsultas;
         }
 
         private void buttonIndexar_Click( object sender, EventArgs e ) {
@@ -59,13 +59,13 @@ namespace P01_RIT_v2.UI
             }
         }
 
-        private void buttonInvertidoConsultas_Click( object sender, EventArgs e ) {
+        private void buttonRutaResultadosConsultas( object sender, EventArgs e ) {
             folderBrowserDialog.Description = "Escoga la carpeta donde se almacenarán los resultados de las consultas:";
             folderBrowserDialog.ShowDialog();
             
             if (!folderBrowserDialog.SelectedPath.Equals(""))
             {
-                textBoxInvertidoConsultas.Text = folderBrowserDialog.SelectedPath + "\\";
+                textBoxRutaResultadosConsulta.Text = folderBrowserDialog.SelectedPath + "\\";
                 Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath + "\\";
                 Opciones.Instance.guardarOpciones();
             }
@@ -120,43 +120,47 @@ namespace P01_RIT_v2.UI
 
         /*Este es del boton de consultas estructuradas*/
         private void buttonConsultaEstruct_Click( object sender, EventArgs e ) {
-            try
+            BusquedaVectorial busquedaVectorial = null;
+
+            if (openFileDialog.FileName.Equals(""))
             {
+                MessageBox.Show("No puede realizar una consulta estructurada sin abrir un archivo de consulta vectorial.");
+            }
+            else
+            {
+                // Solicita el archivo de consulta vectorial que desea utilizar.
+                openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
+                openFileDialog.Filter = "XML File|*.xml";
+                openFileDialog.FileName = "";
+                openFileDialog.InitialDirectory = textBoxRutaResultadosConsulta.Text;
+                openFileDialog.ShowDialog();
+
                 if (textBoxConsultaEstruct.Equals(""))
                 {
-                    throw new Exception("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
+                    MessageBox.Show("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
                 }
                 else
                 {
-                    BusquedaVectorial busquedaVectorial = null;
-
-                    // Solicita el archivo de consulta vectorial que desea utilizar.
-                    openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
-                    openFileDialog.Filter = "XML File|*.xml";
-                    openFileDialog.ShowDialog();
-
-                    if (openFileDialog.FileName.Equals(""))
+                    try
                     {
-                        throw new Exception("No puede realizar una consulta estructurada sin abrir un archivo de consulta vectorial.");
+                        busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
+
+                        BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
+                        string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                            " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
+
+                        nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
+                        nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
                     }
-
-                    busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
-
-                    BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
-                    string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
-
-                    nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
-                    nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace);
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                MessageBox.Show(ex.Message);
-            }
         }
-
+        
         private void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
 
@@ -173,7 +177,7 @@ namespace P01_RIT_v2.UI
 
         private void metroTextButton1_Click( object sender, EventArgs e ) {
             try { 
-                openFileDialog.Title = "Escoga el HTML para abrir";
+                openFileDialog.Title = "Abrir archivo HTML";
                 openFileDialog.Filter = "HTML File|*.html";
                 openFileDialog.ShowDialog();
 
@@ -190,6 +194,31 @@ namespace P01_RIT_v2.UI
 
         private void metroButton1_Click( object sender, EventArgs e ) {
             webBrowser1.GoBack();
+        }
+
+        private void metroLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+
+        private void metroLabel5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

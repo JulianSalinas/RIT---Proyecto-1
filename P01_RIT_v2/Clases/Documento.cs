@@ -230,12 +230,12 @@ namespace P01_RIT_v2.Clases
             try
             {
                 XmlNodeList biologicalEntities = treatment.GetElementsByTagName("biological_entity");
-                foreach (XmlNode entity in biologicalEntities)
+                foreach (XmlNode biological_entity in biologicalEntities)
                 {
-                    if (entity.Attributes["name"].Value.Equals(biologicalEntityName))
+                    if (biological_entity.Attributes["name"].Value.Equals(biologicalEntityName))
                     {
                         // Verificar esta expresión XPath para obtener los nodos "character" hijos del nodo "biological_entity".
-                        XmlNodeList characters = entity.SelectNodes(".//character");
+                        XmlNodeList characters = biological_entity.ChildNodes;
 
                         foreach (XmlNode character in characters)
                         {

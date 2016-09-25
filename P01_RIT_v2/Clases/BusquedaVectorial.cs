@@ -474,7 +474,10 @@ namespace P01_RIT_v2.Clases
                 html += "Taxon Name: " + doc[3] + "\n";
                 html += "Taxon Rank: " + doc[4] + "\n";
                 html += "Taxon Description:\n" + doc[5] + "\n";
-                html += "<a href = \"" + doc[6] + "\">Ubicación: " + doc[6] + "</a>\n";
+
+
+                string urlArchivo = "file:///" + Regex.Replace(doc[6], @"\\", "/");
+                html += "<a href = \"" + urlArchivo + "\">Ubicación: " + doc[6] + "</a>\n";
             }
             html += "</pre>";
 
