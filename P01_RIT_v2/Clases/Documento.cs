@@ -289,8 +289,8 @@ namespace P01_RIT_v2.Clases
             Regex numRegEx = new Regex(numPattern, RegexOptions.Compiled);
 
             // RegEx para eliminar los signos de puntuacion
-            // CORREGIR RegEx : Quita eñe(s)
-            string noPuntuacionesPattern = @"[^a-zA-Z0-9 ]|(\d)?(\d|,)*\.?\d";      
+
+            string noPuntuacionesPattern = @"[^a-zA-Z0-9ñ ]|(\d)?(\d|,)*\.?\d";      
             Regex noPuntuacionesRegEx = new Regex(noPuntuacionesPattern, RegexOptions.Compiled);
 
             // Agrega los terminos del TaxonName y el Rank
