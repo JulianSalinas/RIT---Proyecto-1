@@ -446,7 +446,7 @@ namespace P01_RIT_v2.Clases
             {
                 RankingDocumento rankingObtenido = rankingDocumentos[pos];
                 string strPosicion = rankingObtenido.Posicion.ToString();
-                string strSimilitud = rankingObtenido.Similitud.ToString("F3");
+                string strSimilitud = rankingObtenido.Similitud.ToString();
                 string strDocId = rankingObtenido.IdDocumento.ToString();
                 string strTaxonName = rankingObtenido.TaxonNameDocumento;
                 string strTaxonRank = rankingObtenido.TaxonRank;
@@ -455,9 +455,10 @@ namespace P01_RIT_v2.Clases
                 documento.cargarDocumento();
 
                 string strTaxonDescription = documento.getTaxonDescription(true);
+                string strRutaDocumento = documento.RutaArchivo;
 
                 // Formato de cada entrada del escalafón para las primeras 30 posiciones.
-                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription });
+                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription, strRutaDocumento });
             }
 
 
@@ -466,23 +467,30 @@ namespace P01_RIT_v2.Clases
             html += "Fecha de la consulta vectorial: \t" + strFechaHoraBusqueda + "\n";
             html += "Ruta de la coleccion consultada: \t" + strRutaDocumentos + "\n";
             html += "Texto de la consulta: \t" + strTextoConsulta + "\n";
-            foreach ( string[] doc in top30 ) {
+            foreach (string[] doc in top30)
+            {
                 html += "\nID del documento: " + doc[2] + "\n";
                 html += "Posicion obtenida: " + doc[0] + "\n";
                 html += "Similitud: " + doc[1] + "\n";
                 html += "Taxon Name: " + doc[3] + "\n";
                 html += "Taxon Rank: " + doc[4] + "\n";
                 html += "Taxon Description:\n" + doc[5] + "\n";
+
+
+                string urlArchivo = "file:///" + Regex.Replace(doc[6], @"\\", "/");
+                html += "<a href = \"" + urlArchivo + "\">Ubicación: " + doc[6] + "</a>\n";
             }
             html += "</pre>";
 
             StreamWriter file = null;
 
-            try {
+            try
+            {
                 file = new StreamWriter(rutaArchivo);
                 file.WriteLine(html);
             }
-            catch ( Exception e ) {
+            catch (Exception e)
+            {
                 throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
             }
             finally

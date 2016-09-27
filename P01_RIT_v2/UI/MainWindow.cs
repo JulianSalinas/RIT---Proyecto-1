@@ -21,7 +21,7 @@ namespace P01_RIT_v2.UI
             textBoxPrefijo.Text = Opciones.Instance.Prefijo;
             textBoxColeccion.Text = Opciones.Instance.RutaColeccion;
             textBoxInvertido.Text = Opciones.Instance.RutaArchivos;
-            textBoxInvertidoConsultas.Text = Opciones.Instance.RutaConsultas;
+            textBoxRutaResultadosConsulta.Text = Opciones.Instance.RutaConsultas;
         }
 
         private void buttonIndexar_Click( object sender, EventArgs e ) {
@@ -59,13 +59,13 @@ namespace P01_RIT_v2.UI
             }
         }
 
-        private void buttonInvertidoConsultas_Click( object sender, EventArgs e ) {
+        private void buttonRutaResultadosConsultas( object sender, EventArgs e ) {
             folderBrowserDialog.Description = "Escoga la carpeta donde se almacenarán los resultados de las consultas:";
             folderBrowserDialog.ShowDialog();
             
             if (!folderBrowserDialog.SelectedPath.Equals(""))
             {
-                textBoxInvertidoConsultas.Text = folderBrowserDialog.SelectedPath + "\\";
+                textBoxRutaResultadosConsulta.Text = folderBrowserDialog.SelectedPath + "\\";
                 Opciones.Instance.RutaConsultas = folderBrowserDialog.SelectedPath + "\\";
                 Opciones.Instance.guardarOpciones();
             }
@@ -105,6 +105,8 @@ namespace P01_RIT_v2.UI
                 {
                     BusquedaVectorial nuevaBusqueda = new BusquedaVectorial(Invertido.Instance, Opciones.Instance.RutaColeccion, textBoxConsultaVectorial.Text);
 
+                    MessageBox.Show("La consulta vectorial ha sido realizada.");
+
                     string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
                         " Busqueda Vectorial " + nuevaBusqueda.FechaHoraBusquedaVectorial.ToString("dd-MM-yyyy HH-mm-ss");
 
@@ -120,35 +122,39 @@ namespace P01_RIT_v2.UI
 
         /*Este es del boton de consultas estructuradas*/
         private void buttonConsultaEstruct_Click( object sender, EventArgs e ) {
+            BusquedaVectorial busquedaVectorial = null;
+
+            if (textBoxConsultaEstruct.Equals(""))
+            {
+                MessageBox.Show("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
+                return;
+            }
+
+            // Solicita el archivo de consulta vectorial que desea utilizar.
+            openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
+            openFileDialog.Filter = "XML File|*.xml";
+            openFileDialog.FileName = "";
+            openFileDialog.InitialDirectory = textBoxRutaResultadosConsulta.Text;
+            openFileDialog.ShowDialog();
+
+            if (openFileDialog.FileName.Equals(""))
+            {
+                MessageBox.Show("No puede realizar una consulta estructurada sin cargar una consulta vectorial.");
+                return;
+            }
+
             try
             {
-                if (textBoxConsultaEstruct.Equals(""))
-                {
-                    throw new Exception("No puede realizar una consulta estructurada sin especificar cláusulas de consulta.");
-                }
-                else
-                {
-                    BusquedaVectorial busquedaVectorial = null;
+                busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
 
-                    // Solicita el archivo de consulta vectorial que desea utilizar.
-                    openFileDialog.Title = "Escoga el archivo XML de la consulta vectorial que utilizará";
-                    openFileDialog.Filter = "XML File|*.xml";
-                    openFileDialog.ShowDialog();
+                BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
+                string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
+                    " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
 
-                    if (openFileDialog.FileName.Equals(""))
-                    {
-                        throw new Exception("No puede realizar una consulta estructurada sin abrir un archivo de consulta vectorial.");
-                    }
+                MessageBox.Show("La consulta estructurada ha sido finalizada.");
 
-                    busquedaVectorial = BusquedaVectorial.importarDesdeXml(openFileDialog.FileName, true);
-
-                    BusquedaEstructurada nuevaBusqueda = new BusquedaEstructurada(busquedaVectorial, textBoxConsultaEstruct.Text);
-                    string rutaArchivosGenerados = Opciones.Instance.RutaConsultas + Opciones.Instance.Prefijo +
-                        " Busqueda Estructurada " + nuevaBusqueda.FechaHoraBusquedaEstructurada.ToString("dd-MM-yyyy HH-mm-ss");
-
-                    nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
-                    nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
-                }
+                nuevaBusqueda.exportarComoXml(rutaArchivosGenerados + ".xml", true);
+                nuevaBusqueda.generarHTML(rutaArchivosGenerados + ".html", true);
             }
             catch (Exception ex)
             {
@@ -156,7 +162,7 @@ namespace P01_RIT_v2.UI
                 MessageBox.Show(ex.Message);
             }
         }
-
+        
         private void openFileDialog_FileOk(object sender, CancelEventArgs e)
         {
 
@@ -169,6 +175,52 @@ namespace P01_RIT_v2.UI
 
         private void textBoxPrefijo_TextChanged( object sender, EventArgs e ) {
             Opciones.Instance.Prefijo = textBoxPrefijo.Text;
+        }
+
+        private void metroTextButton1_Click( object sender, EventArgs e ) {
+            try { 
+                openFileDialog.Title = "Abrir archivo HTML";
+                openFileDialog.Filter = "HTML File|*.html";
+                openFileDialog.ShowDialog();
+
+                if ( !openFileDialog.FileName.Equals("") ) {
+                    textboxhtml.Text = openFileDialog.FileName;
+                    webBrowser1.Navigate(openFileDialog.FileName);
+                }
+
+            }
+            catch(Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void metroButton1_Click( object sender, EventArgs e ) {
+            webBrowser1.GoBack();
+        }
+
+        private void metroLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+
+        private void metroLabel5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void metroLabel1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

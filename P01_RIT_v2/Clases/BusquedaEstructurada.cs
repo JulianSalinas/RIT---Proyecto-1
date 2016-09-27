@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
 
 namespace P01_RIT_v2.Clases
 {
@@ -49,7 +48,7 @@ namespace P01_RIT_v2.Clases
         /// Ranking de documentos utilizados para la consulta estructurada.
         /// </summary>
         public List<RankingDocumento> RankingDocumentos;
-   
+
         public BusquedaEstructurada()
         {
             FechaHoraBusquedaEstructurada = System.DateTime.Now;
@@ -93,7 +92,6 @@ namespace P01_RIT_v2.Clases
         /// <param name="busquedaVectorial">Consulta vectorial importada.</param>
         private void importarConsultaVectorial(BusquedaVectorial busquedaVectorial)
         {
-            
             RutaBusquedaVectorial = busquedaVectorial.RutaBusquedaVectorial;
             FechaHoraBusquedaVectorial = busquedaVectorial.FechaHoraBusquedaVectorial;
             RutaColeccionDocumentos = busquedaVectorial.RutaDocumentos;
@@ -122,50 +120,7 @@ namespace P01_RIT_v2.Clases
         {
             Documento documento = new Documento(rankingDocumento.IdDocumento, rankingDocumento.RutaDocumento);
             documento.cargarDocumento();
-
-            // Obtiene todos los valores del atributo "name" para las etiquetas "biological_entity"
-            List<string> bioEntitiesDocumento = documento.getBiologicalEntitiesNames();
-            foreach (string bioEntityNameDoc in bioEntitiesDocumento)
-            {
-                // Coincide el "name" de "biological_entity".
-                if (bioEntityNameDoc.ToLower().Equals(clausula.BiologicalEntity))
-                {
-                    // La consulta tiene más de un término.
-                    if (!clausula.CharacterName.Equals(""))
-                    {
-                        List<string[]> charactersBioEntity = documento.getBiologicalEntityCharacters(bioEntityNameDoc);
-                        foreach (string[] characterBioEntity in charactersBioEntity)
-                        {
-                            // Hay coincidencia en el atributo "name" de "character".
-                            if (characterBioEntity[0].ToLower().Equals(clausula.CharacterName))
-                            {
-                                // La cláusula tiene tres términos.
-                                if (!clausula.CharacterValue.Equals(""))
-                                {
-                                    // La consulta tiene coincidencia en el atributo "value" de "character".
-                                    if (characterBioEntity[1].ToLower().Equals(clausula.CharacterValue))
-                                    {
-                                        return true;
-                                    }
-                                }
-                                else
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return documento.encontrarDato(clausula.BiologicalEntity, clausula.CharacterName, clausula.CharacterValue);
         }
 
         /// <summary>
@@ -175,13 +130,10 @@ namespace P01_RIT_v2.Clases
         /// <returns></returns>
         private ClausulaEstructurada procesarClausula(string clausulaEncontrada)
         {
-            // Se convierten a minúsculas para quitar sensibilidad a mayúsculas/minúsculas.
-            clausulaEncontrada = clausulaEncontrada.ToLower();
-
             string[] terminosClausula = clausulaEncontrada.Split(' ');
             if (terminosClausula.Length < 1)
             {
-                throw new Exception("La cláusula recibir tiene un formato inválido y no puede ser procesada.");
+                throw new Exception("La cláusula recibida tiene un formato inválido y no puede ser procesada.");
             }
             else
             {
@@ -194,7 +146,6 @@ namespace P01_RIT_v2.Clases
                 {
                     nuevaClausula.CharacterValue = terminosClausula[2];
                 }
-
                 return nuevaClausula;
             }
         }
@@ -205,6 +156,10 @@ namespace P01_RIT_v2.Clases
         /// <param name="consulta">Consulta en bruto recibida.</param>
         private void procesarConsulta(string consulta)
         {
+            // Las cláusulas deben ser insensibles a mayúsculas y acentos.
+            consulta.ToLower();
+            consulta = Stopwords.Instance.reemplazarAcentos(consulta);
+
             string patronSeparador = @"\,\s*";
             Regex regExSeparador = new Regex(patronSeparador, RegexOptions.Compiled);
             consulta = regExSeparador.Replace(consulta, ", ");
@@ -213,11 +168,10 @@ namespace P01_RIT_v2.Clases
             string patronSeparadorClausulas = @"((\d*\d\,?\d+)|(\w+))(\s((\d*\d\,?\d+)|(\w+))){0,2}";
             Regex regExSeparadorClausulas = new Regex(patronSeparadorClausulas, RegexOptions.Compiled);
 
-            MatchCollection matches = regExSeparadorClausulas.Matches(consulta);
-            foreach (Match match in matches)
+            MatchCollection clausulasEncontradas = regExSeparadorClausulas.Matches(consulta);
+            foreach (Match clausulaEncontrada in clausulasEncontradas)
             {
-                string clausulaEncontrada = match.Value;
-                ClausulaEstructurada nuevaClausula = procesarClausula(clausulaEncontrada);
+                ClausulaEstructurada nuevaClausula = procesarClausula(clausulaEncontrada.Value);
                 ClausulasConsulta.Add(nuevaClausula);
             }
         }
@@ -228,23 +182,20 @@ namespace P01_RIT_v2.Clases
         public void filtrarEscalafon()
         {
             // Recorrido para cada cláusula procesada.
-            foreach(ClausulaEstructurada clausula in ClausulasConsulta)
+            foreach (ClausulaEstructurada clausula in ClausulasConsulta)
             {
                 // Elimina todos los documentos en el escalafón que no cumplen la cláusula actual.
-                RankingDocumentos.RemoveAll(ranking => !revisarDocumento(ranking, clausula));
+                RankingDocumentos.RemoveAll(ranking => (revisarDocumento(ranking, clausula) == false));
             }
         }
 
-        
         public void ejecutar(string consultaEnBruto)
         {
             // Procesa la consulta en bruto para generar las cláusulas de filtrado de la consulta estructurada.
             procesarConsulta(consultaEnBruto);
             // Luego filtra el escalafón, eliminando los documentos que no cumplan las cláusulas obtenidas.
             filtrarEscalafon();
-
         }
-
 
         /// <summary>
         /// Exporta los resultados de la búsqueda vectorial a un archivo XML.
@@ -332,7 +283,7 @@ namespace P01_RIT_v2.Clases
             {
                 RankingDocumento rankingObtenido = RankingDocumentos[posicion];
                 string strPosicion = rankingObtenido.Posicion.ToString();
-                string strSimilitud = rankingObtenido.Similitud.ToString("F3");
+                string strSimilitud = rankingObtenido.Similitud.ToString();
                 string strDocId = rankingObtenido.IdDocumento.ToString();
                 string strTaxonName = rankingObtenido.TaxonNameDocumento;
                 string strTaxonRank = rankingObtenido.TaxonRank;
@@ -341,9 +292,10 @@ namespace P01_RIT_v2.Clases
                 documento.cargarDocumento();
 
                 string strTaxonDescription = documento.getTaxonDescription(true);
+                string strRutaDocumento = documento.RutaArchivo;
 
                 // Formato de cada entrada del escalafón para las primeras 30 posiciones.
-                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription });
+                top30.Add(new string[] { strPosicion, strSimilitud, strDocId, strTaxonName, strTaxonRank, strTaxonDescription, strRutaDocumento });
             }
 
             // Generar el html
@@ -353,27 +305,35 @@ namespace P01_RIT_v2.Clases
             html += "Ruta de la coleccion consultada: \t" + strRutaDocumentos + "\n";
             html += "Texto de la consulta: \t" + strConsulaVectorial + "\n";
             html += "Listas de cláusulas de la consulta: \n";
-            foreach (string[] clausula in clausulas) {
+            foreach (string[] clausula in clausulas)
+            {
                 html += "Biological Entity (name): " + clausula[0] + "\n";
                 html += "Character (name): " + clausula[1] + "\n";
-                html += "Character (value): " + clausula[2] + "\n";
+                html += "Character (value): " + clausula[2] + "\n\n";
             }
-            foreach (string[] doc in top30) { 
+            foreach (string[] doc in top30)
+            {
                 html += "\nId del documento: " + doc[2] + "\n";
                 html += "Posición obtenida: " + doc[0] + "\n";
                 html += "Similitud: " + doc[1] + "\n";
                 html += "Taxon Name: " + doc[3] + "\n";
                 html += "Taxon Rank: " + doc[4] + "\n";
                 html += "Taxon Description:\n" + doc[5] + "\n";
+
+                string urlArchivo = "file:///" + Regex.Replace(doc[6], @"\\", "/");
+                html += "<a href = \"" + urlArchivo + "\">Ubicación: " + doc[6] + "</a>\n";
+
             }
             html += "</pre>";
 
             StreamWriter file = null;
-            try {
+            try
+            {
                 file = new StreamWriter(rutaArchivo);
                 file.WriteLine(html);
             }
-            catch ( Exception e ) {
+            catch (Exception e)
+            {
                 Console.WriteLine(e.StackTrace);
                 throw new Exception("No se ha podido crear el archivo html: \n" + e.Message);
             }

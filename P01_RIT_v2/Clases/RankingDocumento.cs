@@ -97,9 +97,9 @@ namespace P01_RIT_v2.Clases
             try
             {
                 this.idDocumento = documento.Id;
-                this.rutaDocumento = documento.Ruta;
+                this.rutaDocumento = documento.RutaArchivo;
                 this.taxonNameDocumento = documento.getTaxonName();
-                this.taxonRank = documento.getRank();
+                this.taxonRank = documento.getTaxonRank();
             }
             catch(NullReferenceException e)
             {

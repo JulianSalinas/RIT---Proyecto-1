@@ -27,16 +27,16 @@
         private void InitializeComponent() {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.textBoxRutaResultadosConsulta = new MetroFramework.Controls.MetroTextBox();
+            this.buttonInvertidoConsultas = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.textBoxRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox();
             this.buttonRutaArchivoInvertido = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.textBoxNombreInvertido = new MetroFramework.Controls.MetroTextBox();
             this.textBoxInvertido = new MetroFramework.Controls.MetroTextBox();
-            this.textBoxInvertidoConsultas = new MetroFramework.Controls.MetroTextBox();
-            this.buttonInvertidoConsultas = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.buttonInvertido = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
-            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.buttonColeccion = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
@@ -51,35 +51,36 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.buttonConsultaVectorial = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
             this.textBoxConsultaVectorial = new MetroFramework.Controls.MetroTextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
+            this.metroTextButton1 = new MetroFramework.Controls.MetroTextBox.MetroTextButton();
+            this.textboxhtml = new MetroFramework.Controls.MetroTextBox();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(52, 79);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(23, 63);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(661, 411);
+            this.tabControl1.Size = new System.Drawing.Size(729, 446);
             this.tabControl1.TabIndex = 29;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.textBoxRutaArchivoInvertido);
-            this.tabPage1.Controls.Add(this.buttonRutaArchivoInvertido);
-            this.tabPage1.Controls.Add(this.metroLabel8);
             this.tabPage1.Controls.Add(this.metroLabel2);
             this.tabPage1.Controls.Add(this.textBoxNombreInvertido);
             this.tabPage1.Controls.Add(this.textBoxInvertido);
-            this.tabPage1.Controls.Add(this.textBoxInvertidoConsultas);
-            this.tabPage1.Controls.Add(this.buttonInvertidoConsultas);
             this.tabPage1.Controls.Add(this.buttonInvertido);
-            this.tabPage1.Controls.Add(this.metroLabel1);
             this.tabPage1.Controls.Add(this.metroLabel5);
             this.tabPage1.Controls.Add(this.buttonColeccion);
             this.tabPage1.Controls.Add(this.metroLabel4);
@@ -90,10 +91,63 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(653, 385);
+            this.tabPage1.Size = new System.Drawing.Size(721, 420);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Opciones e indexado";
+            this.tabPage1.Text = "Indización";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBoxRutaResultadosConsulta
+            // 
+            // 
+            // 
+            // 
+            this.textBoxRutaResultadosConsulta.CustomButton.Image = null;
+            this.textBoxRutaResultadosConsulta.CustomButton.Location = new System.Drawing.Point(502, 1);
+            this.textBoxRutaResultadosConsulta.CustomButton.Name = "";
+            this.textBoxRutaResultadosConsulta.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.textBoxRutaResultadosConsulta.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textBoxRutaResultadosConsulta.CustomButton.TabIndex = 1;
+            this.textBoxRutaResultadosConsulta.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textBoxRutaResultadosConsulta.CustomButton.UseSelectable = true;
+            this.textBoxRutaResultadosConsulta.CustomButton.Visible = false;
+            this.textBoxRutaResultadosConsulta.Lines = new string[0];
+            this.textBoxRutaResultadosConsulta.Location = new System.Drawing.Point(63, 324);
+            this.textBoxRutaResultadosConsulta.MaxLength = 32767;
+            this.textBoxRutaResultadosConsulta.Name = "textBoxRutaResultadosConsulta";
+            this.textBoxRutaResultadosConsulta.PasswordChar = '\0';
+            this.textBoxRutaResultadosConsulta.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textBoxRutaResultadosConsulta.SelectedText = "";
+            this.textBoxRutaResultadosConsulta.SelectionLength = 0;
+            this.textBoxRutaResultadosConsulta.SelectionStart = 0;
+            this.textBoxRutaResultadosConsulta.Size = new System.Drawing.Size(524, 23);
+            this.textBoxRutaResultadosConsulta.TabIndex = 39;
+            this.textBoxRutaResultadosConsulta.UseSelectable = true;
+            this.textBoxRutaResultadosConsulta.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textBoxRutaResultadosConsulta.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // buttonInvertidoConsultas
+            // 
+            this.buttonInvertidoConsultas.Image = null;
+            this.buttonInvertidoConsultas.Location = new System.Drawing.Point(593, 324);
+            this.buttonInvertidoConsultas.Name = "buttonInvertidoConsultas";
+            this.buttonInvertidoConsultas.Size = new System.Drawing.Size(51, 23);
+            this.buttonInvertidoConsultas.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonInvertidoConsultas.TabIndex = 41;
+            this.buttonInvertidoConsultas.Text = "...";
+            this.buttonInvertidoConsultas.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.buttonInvertidoConsultas.UseSelectable = true;
+            this.buttonInvertidoConsultas.UseVisualStyleBackColor = true;
+            this.buttonInvertidoConsultas.Click += new System.EventHandler(this.buttonRutaResultadosConsultas);
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(63, 302);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(309, 19);
+            this.metroLabel1.TabIndex = 40;
+            this.metroLabel1.Text = "Directorio para guardar resultados de las consultas:";
+            this.metroLabel1.Click += new System.EventHandler(this.metroLabel1_Click);
             // 
             // textBoxRutaArchivoInvertido
             // 
@@ -110,7 +164,7 @@
             this.textBoxRutaArchivoInvertido.CustomButton.UseSelectable = true;
             this.textBoxRutaArchivoInvertido.CustomButton.Visible = false;
             this.textBoxRutaArchivoInvertido.Lines = new string[0];
-            this.textBoxRutaArchivoInvertido.Location = new System.Drawing.Point(35, 314);
+            this.textBoxRutaArchivoInvertido.Location = new System.Drawing.Point(63, 242);
             this.textBoxRutaArchivoInvertido.MaxLength = 32767;
             this.textBoxRutaArchivoInvertido.Name = "textBoxRutaArchivoInvertido";
             this.textBoxRutaArchivoInvertido.PasswordChar = '\0';
@@ -119,7 +173,7 @@
             this.textBoxRutaArchivoInvertido.SelectionLength = 0;
             this.textBoxRutaArchivoInvertido.SelectionStart = 0;
             this.textBoxRutaArchivoInvertido.Size = new System.Drawing.Size(524, 23);
-            this.textBoxRutaArchivoInvertido.TabIndex = 33;
+            this.textBoxRutaArchivoInvertido.TabIndex = 36;
             this.textBoxRutaArchivoInvertido.UseSelectable = true;
             this.textBoxRutaArchivoInvertido.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.textBoxRutaArchivoInvertido.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -127,11 +181,11 @@
             // buttonRutaArchivoInvertido
             // 
             this.buttonRutaArchivoInvertido.Image = null;
-            this.buttonRutaArchivoInvertido.Location = new System.Drawing.Point(565, 314);
+            this.buttonRutaArchivoInvertido.Location = new System.Drawing.Point(593, 242);
             this.buttonRutaArchivoInvertido.Name = "buttonRutaArchivoInvertido";
             this.buttonRutaArchivoInvertido.Size = new System.Drawing.Size(51, 23);
-            this.buttonRutaArchivoInvertido.Style = MetroFramework.MetroColorStyle.Pink;
-            this.buttonRutaArchivoInvertido.TabIndex = 35;
+            this.buttonRutaArchivoInvertido.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonRutaArchivoInvertido.TabIndex = 38;
             this.buttonRutaArchivoInvertido.Text = "...";
             this.buttonRutaArchivoInvertido.Theme = MetroFramework.MetroThemeStyle.Light;
             this.buttonRutaArchivoInvertido.UseSelectable = true;
@@ -141,20 +195,21 @@
             // metroLabel8
             // 
             this.metroLabel8.AutoSize = true;
-            this.metroLabel8.Location = new System.Drawing.Point(35, 292);
+            this.metroLabel8.Location = new System.Drawing.Point(63, 220);
             this.metroLabel8.Name = "metroLabel8";
-            this.metroLabel8.Size = new System.Drawing.Size(296, 19);
-            this.metroLabel8.TabIndex = 34;
-            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas:";
+            this.metroLabel8.Size = new System.Drawing.Size(361, 19);
+            this.metroLabel8.TabIndex = 37;
+            this.metroLabel8.Text = "Ruta del archivo invertido para realizar consultas vectoriales:";
             // 
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(88, 35);
+            this.metroLabel2.Location = new System.Drawing.Point(200, 81);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(186, 19);
             this.metroLabel2.TabIndex = 32;
             this.metroLabel2.Text = "Nombre del archivo invertido:";
+            this.metroLabel2.Click += new System.EventHandler(this.metroLabel2_Click);
             // 
             // textBoxNombreInvertido
             // 
@@ -162,7 +217,7 @@
             // 
             // 
             this.textBoxNombreInvertido.CustomButton.Image = null;
-            this.textBoxNombreInvertido.CustomButton.Location = new System.Drawing.Point(317, 1);
+            this.textBoxNombreInvertido.CustomButton.Location = new System.Drawing.Point(437, 1);
             this.textBoxNombreInvertido.CustomButton.Name = "";
             this.textBoxNombreInvertido.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.textBoxNombreInvertido.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -172,7 +227,7 @@
             this.textBoxNombreInvertido.CustomButton.Visible = false;
             this.textBoxNombreInvertido.Lines = new string[] {
         "  Archivo Invertido"};
-            this.textBoxNombreInvertido.Location = new System.Drawing.Point(88, 57);
+            this.textBoxNombreInvertido.Location = new System.Drawing.Point(200, 103);
             this.textBoxNombreInvertido.MaxLength = 32767;
             this.textBoxNombreInvertido.Name = "textBoxNombreInvertido";
             this.textBoxNombreInvertido.PasswordChar = '\0';
@@ -180,7 +235,7 @@
             this.textBoxNombreInvertido.SelectedText = "";
             this.textBoxNombreInvertido.SelectionLength = 0;
             this.textBoxNombreInvertido.SelectionStart = 0;
-            this.textBoxNombreInvertido.Size = new System.Drawing.Size(339, 23);
+            this.textBoxNombreInvertido.Size = new System.Drawing.Size(459, 23);
             this.textBoxNombreInvertido.TabIndex = 27;
             this.textBoxNombreInvertido.Text = "  Archivo Invertido";
             this.textBoxNombreInvertido.UseSelectable = true;
@@ -202,7 +257,7 @@
             this.textBoxInvertido.CustomButton.UseSelectable = true;
             this.textBoxInvertido.CustomButton.Visible = false;
             this.textBoxInvertido.Lines = new string[0];
-            this.textBoxInvertido.Location = new System.Drawing.Point(35, 184);
+            this.textBoxInvertido.Location = new System.Drawing.Point(78, 253);
             this.textBoxInvertido.MaxLength = 32767;
             this.textBoxInvertido.Name = "textBoxInvertido";
             this.textBoxInvertido.PasswordChar = '\0';
@@ -216,56 +271,13 @@
             this.textBoxInvertido.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.textBoxInvertido.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
-            // textBoxInvertidoConsultas
-            // 
-            // 
-            // 
-            // 
-            this.textBoxInvertidoConsultas.CustomButton.Image = null;
-            this.textBoxInvertidoConsultas.CustomButton.Location = new System.Drawing.Point(502, 1);
-            this.textBoxInvertidoConsultas.CustomButton.Name = "";
-            this.textBoxInvertidoConsultas.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.textBoxInvertidoConsultas.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.textBoxInvertidoConsultas.CustomButton.TabIndex = 1;
-            this.textBoxInvertidoConsultas.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.textBoxInvertidoConsultas.CustomButton.UseSelectable = true;
-            this.textBoxInvertidoConsultas.CustomButton.Visible = false;
-            this.textBoxInvertidoConsultas.Lines = new string[0];
-            this.textBoxInvertidoConsultas.Location = new System.Drawing.Point(35, 249);
-            this.textBoxInvertidoConsultas.MaxLength = 32767;
-            this.textBoxInvertidoConsultas.Name = "textBoxInvertidoConsultas";
-            this.textBoxInvertidoConsultas.PasswordChar = '\0';
-            this.textBoxInvertidoConsultas.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.textBoxInvertidoConsultas.SelectedText = "";
-            this.textBoxInvertidoConsultas.SelectionLength = 0;
-            this.textBoxInvertidoConsultas.SelectionStart = 0;
-            this.textBoxInvertidoConsultas.Size = new System.Drawing.Size(524, 23);
-            this.textBoxInvertidoConsultas.TabIndex = 29;
-            this.textBoxInvertidoConsultas.UseSelectable = true;
-            this.textBoxInvertidoConsultas.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.textBoxInvertidoConsultas.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // buttonInvertidoConsultas
-            // 
-            this.buttonInvertidoConsultas.Image = null;
-            this.buttonInvertidoConsultas.Location = new System.Drawing.Point(565, 249);
-            this.buttonInvertidoConsultas.Name = "buttonInvertidoConsultas";
-            this.buttonInvertidoConsultas.Size = new System.Drawing.Size(51, 23);
-            this.buttonInvertidoConsultas.Style = MetroFramework.MetroColorStyle.Orange;
-            this.buttonInvertidoConsultas.TabIndex = 31;
-            this.buttonInvertidoConsultas.Text = "...";
-            this.buttonInvertidoConsultas.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.buttonInvertidoConsultas.UseSelectable = true;
-            this.buttonInvertidoConsultas.UseVisualStyleBackColor = true;
-            this.buttonInvertidoConsultas.Click += new System.EventHandler(this.buttonInvertidoConsultas_Click);
-            // 
             // buttonInvertido
             // 
             this.buttonInvertido.Image = null;
-            this.buttonInvertido.Location = new System.Drawing.Point(565, 184);
+            this.buttonInvertido.Location = new System.Drawing.Point(608, 253);
             this.buttonInvertido.Name = "buttonInvertido";
             this.buttonInvertido.Size = new System.Drawing.Size(51, 23);
-            this.buttonInvertido.Style = MetroFramework.MetroColorStyle.Green;
+            this.buttonInvertido.Style = MetroFramework.MetroColorStyle.Red;
             this.buttonInvertido.TabIndex = 26;
             this.buttonInvertido.Text = "...";
             this.buttonInvertido.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -273,31 +285,23 @@
             this.buttonInvertido.UseVisualStyleBackColor = true;
             this.buttonInvertido.Click += new System.EventHandler(this.buttonInvertido_Click);
             // 
-            // metroLabel1
-            // 
-            this.metroLabel1.AutoSize = true;
-            this.metroLabel1.Location = new System.Drawing.Point(35, 227);
-            this.metroLabel1.Name = "metroLabel1";
-            this.metroLabel1.Size = new System.Drawing.Size(297, 19);
-            this.metroLabel1.TabIndex = 30;
-            this.metroLabel1.Text = "Ruta para guardar los resultados de las consultas:";
-            // 
             // metroLabel5
             // 
             this.metroLabel5.AutoSize = true;
-            this.metroLabel5.Location = new System.Drawing.Point(35, 162);
+            this.metroLabel5.Location = new System.Drawing.Point(78, 231);
             this.metroLabel5.Name = "metroLabel5";
-            this.metroLabel5.Size = new System.Drawing.Size(222, 19);
+            this.metroLabel5.Size = new System.Drawing.Size(254, 19);
             this.metroLabel5.TabIndex = 22;
-            this.metroLabel5.Text = "Ruta para guardar archivo invertido:";
+            this.metroLabel5.Text = "Directorio para guardar archivo invertido:";
+            this.metroLabel5.Click += new System.EventHandler(this.metroLabel5_Click);
             // 
             // buttonColeccion
             // 
             this.buttonColeccion.Image = null;
-            this.buttonColeccion.Location = new System.Drawing.Point(565, 122);
+            this.buttonColeccion.Location = new System.Drawing.Point(608, 177);
             this.buttonColeccion.Name = "buttonColeccion";
             this.buttonColeccion.Size = new System.Drawing.Size(51, 23);
-            this.buttonColeccion.Style = MetroFramework.MetroColorStyle.Teal;
+            this.buttonColeccion.Style = MetroFramework.MetroColorStyle.Red;
             this.buttonColeccion.TabIndex = 25;
             this.buttonColeccion.Text = "...";
             this.buttonColeccion.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -308,19 +312,19 @@
             // metroLabel4
             // 
             this.metroLabel4.AutoSize = true;
-            this.metroLabel4.Location = new System.Drawing.Point(35, 100);
+            this.metroLabel4.Location = new System.Drawing.Point(78, 155);
             this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(129, 19);
+            this.metroLabel4.Size = new System.Drawing.Size(256, 19);
             this.metroLabel4.TabIndex = 23;
-            this.metroLabel4.Text = "Ruta de la colección:";
+            this.metroLabel4.Text = "Directorio con la coleción de documentos:";
             // 
             // buttonIndexar
             // 
             this.buttonIndexar.Image = null;
-            this.buttonIndexar.Location = new System.Drawing.Point(433, 57);
+            this.buttonIndexar.Location = new System.Drawing.Point(367, 325);
             this.buttonIndexar.Name = "buttonIndexar";
-            this.buttonIndexar.Size = new System.Drawing.Size(183, 23);
-            this.buttonIndexar.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonIndexar.Size = new System.Drawing.Size(292, 23);
+            this.buttonIndexar.Style = MetroFramework.MetroColorStyle.Purple;
             this.buttonIndexar.TabIndex = 20;
             this.buttonIndexar.Text = "Crear Archivo Invertido";
             this.buttonIndexar.UseSelectable = true;
@@ -333,7 +337,7 @@
             // 
             // 
             this.textBoxPrefijo.CustomButton.Image = null;
-            this.textBoxPrefijo.CustomButton.Location = new System.Drawing.Point(25, 1);
+            this.textBoxPrefijo.CustomButton.Location = new System.Drawing.Point(83, 1);
             this.textBoxPrefijo.CustomButton.Name = "";
             this.textBoxPrefijo.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.textBoxPrefijo.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -342,7 +346,7 @@
             this.textBoxPrefijo.CustomButton.UseSelectable = true;
             this.textBoxPrefijo.CustomButton.Visible = false;
             this.textBoxPrefijo.Lines = new string[0];
-            this.textBoxPrefijo.Location = new System.Drawing.Point(35, 57);
+            this.textBoxPrefijo.Location = new System.Drawing.Point(78, 103);
             this.textBoxPrefijo.MaxLength = 32767;
             this.textBoxPrefijo.Name = "textBoxPrefijo";
             this.textBoxPrefijo.PasswordChar = '\0';
@@ -350,7 +354,7 @@
             this.textBoxPrefijo.SelectedText = "";
             this.textBoxPrefijo.SelectionLength = 0;
             this.textBoxPrefijo.SelectionStart = 0;
-            this.textBoxPrefijo.Size = new System.Drawing.Size(47, 23);
+            this.textBoxPrefijo.Size = new System.Drawing.Size(105, 23);
             this.textBoxPrefijo.TabIndex = 17;
             this.textBoxPrefijo.UseSelectable = true;
             this.textBoxPrefijo.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -372,7 +376,7 @@
             this.textBoxColeccion.CustomButton.UseSelectable = true;
             this.textBoxColeccion.CustomButton.Visible = false;
             this.textBoxColeccion.Lines = new string[0];
-            this.textBoxColeccion.Location = new System.Drawing.Point(35, 122);
+            this.textBoxColeccion.Location = new System.Drawing.Point(78, 177);
             this.textBoxColeccion.MaxLength = 32767;
             this.textBoxColeccion.Name = "textBoxColeccion";
             this.textBoxColeccion.PasswordChar = '\0';
@@ -389,7 +393,7 @@
             // metroLabel6
             // 
             this.metroLabel6.AutoSize = true;
-            this.metroLabel6.Location = new System.Drawing.Point(35, 35);
+            this.metroLabel6.Location = new System.Drawing.Point(78, 81);
             this.metroLabel6.Name = "metroLabel6";
             this.metroLabel6.Size = new System.Drawing.Size(50, 19);
             this.metroLabel6.TabIndex = 21;
@@ -397,24 +401,31 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBoxRutaResultadosConsulta);
             this.tabPage2.Controls.Add(this.metroLabel7);
+            this.tabPage2.Controls.Add(this.buttonInvertidoConsultas);
             this.tabPage2.Controls.Add(this.buttonConsultaEstruct);
+            this.tabPage2.Controls.Add(this.textBoxRutaArchivoInvertido);
             this.tabPage2.Controls.Add(this.textBoxConsultaEstruct);
+            this.tabPage2.Controls.Add(this.metroLabel1);
             this.tabPage2.Controls.Add(this.metroLabel3);
+            this.tabPage2.Controls.Add(this.metroLabel8);
             this.tabPage2.Controls.Add(this.buttonConsultaVectorial);
+            this.tabPage2.Controls.Add(this.buttonRutaArchivoInvertido);
             this.tabPage2.Controls.Add(this.textBoxConsultaVectorial);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(653, 385);
+            this.tabPage2.Size = new System.Drawing.Size(721, 420);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Consultas y busquedas";
+            this.tabPage2.Text = "Consultas";
             this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // metroLabel7
             // 
             this.metroLabel7.AutoSize = true;
-            this.metroLabel7.Location = new System.Drawing.Point(36, 123);
+            this.metroLabel7.Location = new System.Drawing.Point(63, 134);
             this.metroLabel7.Name = "metroLabel7";
             this.metroLabel7.Size = new System.Drawing.Size(138, 19);
             this.metroLabel7.TabIndex = 27;
@@ -423,10 +434,10 @@
             // buttonConsultaEstruct
             // 
             this.buttonConsultaEstruct.Image = null;
-            this.buttonConsultaEstruct.Location = new System.Drawing.Point(439, 145);
+            this.buttonConsultaEstruct.Location = new System.Drawing.Point(466, 156);
             this.buttonConsultaEstruct.Name = "buttonConsultaEstruct";
             this.buttonConsultaEstruct.Size = new System.Drawing.Size(183, 23);
-            this.buttonConsultaEstruct.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonConsultaEstruct.Style = MetroFramework.MetroColorStyle.Purple;
             this.buttonConsultaEstruct.TabIndex = 26;
             this.buttonConsultaEstruct.Text = "Realizar consulta";
             this.buttonConsultaEstruct.UseSelectable = true;
@@ -448,7 +459,7 @@
             this.textBoxConsultaEstruct.CustomButton.UseSelectable = true;
             this.textBoxConsultaEstruct.CustomButton.Visible = false;
             this.textBoxConsultaEstruct.Lines = new string[0];
-            this.textBoxConsultaEstruct.Location = new System.Drawing.Point(36, 145);
+            this.textBoxConsultaEstruct.Location = new System.Drawing.Point(63, 156);
             this.textBoxConsultaEstruct.MaxLength = 32767;
             this.textBoxConsultaEstruct.Name = "textBoxConsultaEstruct";
             this.textBoxConsultaEstruct.PasswordChar = '\0';
@@ -466,7 +477,7 @@
             // metroLabel3
             // 
             this.metroLabel3.AutoSize = true;
-            this.metroLabel3.Location = new System.Drawing.Point(36, 59);
+            this.metroLabel3.Location = new System.Drawing.Point(63, 57);
             this.metroLabel3.Name = "metroLabel3";
             this.metroLabel3.Size = new System.Drawing.Size(115, 19);
             this.metroLabel3.TabIndex = 24;
@@ -475,10 +486,10 @@
             // buttonConsultaVectorial
             // 
             this.buttonConsultaVectorial.Image = null;
-            this.buttonConsultaVectorial.Location = new System.Drawing.Point(439, 81);
+            this.buttonConsultaVectorial.Location = new System.Drawing.Point(466, 79);
             this.buttonConsultaVectorial.Name = "buttonConsultaVectorial";
             this.buttonConsultaVectorial.Size = new System.Drawing.Size(183, 23);
-            this.buttonConsultaVectorial.Style = MetroFramework.MetroColorStyle.Red;
+            this.buttonConsultaVectorial.Style = MetroFramework.MetroColorStyle.Purple;
             this.buttonConsultaVectorial.TabIndex = 22;
             this.buttonConsultaVectorial.Text = "Realizar consulta";
             this.buttonConsultaVectorial.UseSelectable = true;
@@ -500,7 +511,7 @@
             this.textBoxConsultaVectorial.CustomButton.UseSelectable = true;
             this.textBoxConsultaVectorial.CustomButton.Visible = false;
             this.textBoxConsultaVectorial.Lines = new string[0];
-            this.textBoxConsultaVectorial.Location = new System.Drawing.Point(36, 81);
+            this.textBoxConsultaVectorial.Location = new System.Drawing.Point(63, 79);
             this.textBoxConsultaVectorial.MaxLength = 32767;
             this.textBoxConsultaVectorial.Name = "textBoxConsultaVectorial";
             this.textBoxConsultaVectorial.PasswordChar = '\0';
@@ -514,6 +525,81 @@
             this.textBoxConsultaVectorial.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.textBoxConsultaVectorial.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.metroButton1);
+            this.tabPage3.Controls.Add(this.metroTextButton1);
+            this.tabPage3.Controls.Add(this.textboxhtml);
+            this.tabPage3.Controls.Add(this.webBrowser1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(721, 420);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Visor HTML";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Location = new System.Drawing.Point(3, 3);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(64, 23);
+            this.metroButton1.TabIndex = 40;
+            this.metroButton1.Text = "Atrás";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            // 
+            // metroTextButton1
+            // 
+            this.metroTextButton1.Image = null;
+            this.metroTextButton1.Location = new System.Drawing.Point(667, 3);
+            this.metroTextButton1.Name = "metroTextButton1";
+            this.metroTextButton1.Size = new System.Drawing.Size(51, 23);
+            this.metroTextButton1.Style = MetroFramework.MetroColorStyle.Red;
+            this.metroTextButton1.TabIndex = 38;
+            this.metroTextButton1.Text = "...";
+            this.metroTextButton1.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.metroTextButton1.UseSelectable = true;
+            this.metroTextButton1.UseVisualStyleBackColor = true;
+            this.metroTextButton1.Click += new System.EventHandler(this.metroTextButton1_Click);
+            // 
+            // textboxhtml
+            // 
+            // 
+            // 
+            // 
+            this.textboxhtml.CustomButton.Image = null;
+            this.textboxhtml.CustomButton.Location = new System.Drawing.Point(566, 1);
+            this.textboxhtml.CustomButton.Name = "";
+            this.textboxhtml.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.textboxhtml.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.textboxhtml.CustomButton.TabIndex = 1;
+            this.textboxhtml.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.textboxhtml.CustomButton.UseSelectable = true;
+            this.textboxhtml.CustomButton.Visible = false;
+            this.textboxhtml.Lines = new string[0];
+            this.textboxhtml.Location = new System.Drawing.Point(73, 3);
+            this.textboxhtml.MaxLength = 32767;
+            this.textboxhtml.Name = "textboxhtml";
+            this.textboxhtml.PasswordChar = '\0';
+            this.textboxhtml.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.textboxhtml.SelectedText = "";
+            this.textboxhtml.SelectionLength = 0;
+            this.textboxhtml.SelectionStart = 0;
+            this.textboxhtml.Size = new System.Drawing.Size(588, 23);
+            this.textboxhtml.TabIndex = 36;
+            this.textboxhtml.UseSelectable = true;
+            this.textboxhtml.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.textboxhtml.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Location = new System.Drawing.Point(3, 23);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(715, 394);
+            this.webBrowser1.TabIndex = 39;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
+            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
@@ -523,7 +609,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 524);
+            this.ClientSize = new System.Drawing.Size(775, 532);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainWindow";
             this.Text = "Bienvenido";
@@ -532,6 +618,7 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -543,10 +630,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroTextBox textBoxNombreInvertido;
         private MetroFramework.Controls.MetroTextBox textBoxInvertido;
-        private MetroFramework.Controls.MetroTextBox textBoxInvertidoConsultas;
-        private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonInvertidoConsultas;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonInvertido;
-        private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonColeccion;
         private MetroFramework.Controls.MetroLabel metroLabel4;
@@ -564,6 +648,14 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.TabPage tabPage3;
+        private MetroFramework.Controls.MetroTextBox.MetroTextButton metroTextButton1;
+        private MetroFramework.Controls.MetroTextBox textboxhtml;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroTextBox textBoxRutaResultadosConsulta;
+        private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonInvertidoConsultas;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTextBox textBoxRutaArchivoInvertido;
         private MetroFramework.Controls.MetroTextBox.MetroTextButton buttonRutaArchivoInvertido;
         private MetroFramework.Controls.MetroLabel metroLabel8;
